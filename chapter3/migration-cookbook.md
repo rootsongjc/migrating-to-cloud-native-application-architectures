@@ -1,0 +1,3 @@
+# Migration Cookbook
+
+Now that we’ve defined cloud-native application architectures and given a brief high-level overview of the changes enterprises must consider when adopting them, it’s time to delve into technical specifics. Each of these topics minimally merits its own chapter, and that’s beyond the scope of this report. Instead, this chapter provides a set of short, cookbook-style recipes to help with specific tasks and patterns needed to adopt a cloud-native application architecture, along with links to helpful further reading.
