@@ -1,62 +1,69 @@
-## Why Cloud-Native Application Architectures?
+# 为何使用云原生应用架构
 
-First we’ll examine the common motivations behind moving tocloud-native application architectures.
+首先我们来阐述下将应用迁移到云原生架构的动机。
 
-## Speed
+## 速度
 
-It’s become clear that speed wins in the marketplace. Businesses that are able to innovate, experiment, and deliver software-based solutions quickly are outcompeting those that follow more traditional delivery models.
+天下武功，唯快不破，市场竞争亦是如此。想象一下，能够快速创新、实验并交付软件的企业，与使用传统软件交付模式的企业，谁将在市场竞争中胜出呢？
 
-In the enterprise, the time it takes to provision new application environments and deploy new versions of software is typically measured in days, weeks, or months. This lack of speed severely limits the risk that can be taken on by any one release, because the cost of making and fixing a mistake is also measured on that same timescale.Internet companies are often cited for their practice of deploying hundreds of times per day. Why are frequent deployments important? If you can deploy hundreds of times per day, you can recover from mistakes almost instantly. If you can recover from mistakes almost instantly, you can take on more risk. If you can take on more risk, you can try wild experiments—the results might turn into your next competitive advantage.
+在传统企业中，为应用提供环境和部署新版本花费的时间通常以天、周或月来计算。这种速度严重限制了每个发行版可以承担的风险，因为修复这些错误往往跟发行一个新版本有差不多的耗时。
 
-The elasticity and self-service nature of cloud-based infrastructure naturally lends itself to this way of working. Provisioning a new application environment by making a call to a cloud service API is faster than a form-based manual process by several orders of magnitude. Deploying code to that new environment via another API call adds more speed. Adding self-service and hooks to teams’ continuous integration/build server environments adds even more speed. Eventually we can measure the answer to Lean guru Mary Poppendick’s question, “How long would it take your organization to deploy a change that involves just one single line of code?” in minutes or seconds.
+互联网公司经常提到它们每天极版次发布的实践。为什么频繁发布如此重要？如果你可以每天实现几百次发布，你们就可以几乎立即从错误的版本恢复过来。如果你可以立即从错误中恢复过来，你就能够承受更多的风险。如果你可以承受更多的风险，你就可以做更疯狂的试验——这些试验结果可能会成为你接下来的竞争优势。
 
-Imagine what your team...what your business...could do if you were able to move that fast!
+基于云基础设置的弹性和自服务的特性天生就适应于这种工作方式。通过调用云服务API来提供新的应用程序环境比基于表单的手动过程要快几个数量级。然后通过另一个API调用将代码部署到新的环境中。将自服务和hook添加到团队的CI/CD服务器环境中进一步加快了速度。现在，我们可以回答精益大师Mary Poppendick提出的问题了——“如果只是改变了应用的一行代码，您的组织需要多长时间才能把应用部署到线上？“答案是几分钟或几秒钟。
 
-## Safety
+你可以大胆想象 一下，如果你也可以达到这样的速度，你的团队、你的业务可以做哪些事情呢？
 
-It’s not enough to go extremely fast. If you get in your car and push the pedal to the floor, eventually you’re going to have a rather expensive (or deadly!) accident. Transportation modes such as aircraft and express bullet trains are built for speed and safety. Cloud-native application architectures balance the need to move rapidly with the needs of stability, availability, and durability. It’s possible and essential to have both.
+## 安全
 
-As we’ve already mentioned, cloud-native application architectures enable us to rapidly recover from mistakes. We’re not talking about mistake prevention, which has been the focus of many expensive hours of process engineering in the enterprise. Big design up front, exhaustive documentation, architectural review boards, and lengthy regression testing cycles all fly in the face of the speed that we’re seeking. Of course, all of these practices were created with good intentions. Unfortunately, none of them have provided consistently measurable improvements in the number of defects that make it into production.
+光是速度快还是不够的。如果你开车是一开始就把油门踩到底，你将因此发生事故而付出惨痛的代价（有时甚至是致命的）！不同的交通方式如飞机和特快列车都会兼顾速度和安全性。云原生应用架构在快速变动的需求、稳定性、可用性和耐久性之间寻求平衡。这是可能的而且非常有必要同时实现的。
 
-So how do we go fast and safe?
+我们前面已经提到过，云原生应用架构可以让我们迅速地从错误中恢复。我们没有谈论如何预防错误，而在企业里往往在这一点上花费了大量的时间。在追寻速度的路上，大而全的前端升级，详尽的文档，架构复核委员会和漫长的回归测试周期在一次次成为我们的绊脚石。当然，之所以这样做都是出于好意。不幸的是，所有这些做法都不能提供一致可衡量的生产缺陷改善度量。
 
-**Visibility**
+那么我们如何才能做到即安全又快速呢？
 
-Our architectures must provide us with the tools necessary to see failure when it happens. We need the ability to measure everything, establish a profile for “what’s normal,” detect devia‐ tions from the norm (including absolute values and rate of change), and identify the components contributing to those deviations. Feature-rich metrics, monitoring, alerting, and data visualization frameworks and tools are at the heart of all cloudnative application architectures.
+**可视化**
 
-**Fault isolation**
+我们的架构必须为我们提供必要的工具，以便可以在发生故障时看到它。 我们需要观测一切的能力，建立一个“哪些是正常”的概况，检测与标准情况的偏差（包括绝对值和变化率），并确定哪些组件导致了这些偏差。功能丰富的指标、监控、警报、数据可视化框架和工具是所有云原生应用程序体系结构的核心。
 
-In order to limit the risk associated with failure, we need to limit the scope of components or features that could be affected by a failure. If no one could purchase products from Ama‐ zon.com every time the recommendations engine went down, that would be disastrous. Monolithic application architectures often possess this type of failure mode. Cloud-native application architectures often employ microservices (“Microservices” on page 10). By composing systems from microservices, we can limit the scope of a failure in any one microservice to just that microservice, but only if combined with fault tolerance.
+**故障隔离**
 
-**Fault tolerance**
+为了限制与故障带来的风险，我们需要限制可能受到故障影响的组件或功能的范围。如果每次亚马逊的推荐引擎挂掉后人们就不能再在亚马逊上买产品，那将是灾难性的。单体架构通常就是这种类型的故障模式。云原生应用程序架构通常使用微服务。通过将系统拆解为微服务，我们可以将任何一个微服务的故障范围限制在这个微服务上，但还需要结合容错才能实现这一点。
 
-It’s not enough to decompose a system into independently deployable components; we must also prevent a failure in one of those components from causing a cascading failure across its possibly many transitive dependencies. Mike Nygard described several fault tolerance patterns in his book Release It! (Pragmatic Programmers), the most popular being the circuit breaker. A software circuit breaker works very similarly to an electrical circuit breaker: it prevents cascading failure by opening the circuit between the component it protects and the remainder of the failing system. It also can provide a graceful fallback behavior, such as a default set of product recommendations, while the circuit is open. We’ll discuss this pattern in detail in “FaultTolerance” on page 42.
+**容错**
 
-**Automated recovery**
+仅仅将系统拆解为可以独立部署的微服务还是不够的；还需要防止出现错误的组件将错误传递它所的依赖组件上造成级联故障。Mike Nygard 在他的《Release It! - Pragmatic Programmers》一书中描述了一些容错模型，最受欢迎的是**断路器**。软件断路器的工作原理就类似于电子断路器（保险丝）：断开它所保护的组件与故障系统之间的回路以防止级联故障。它还可以提供一个优雅的回退行为，比如回路断开的时候提供一组默认的产品推荐。我们将在“容错”一节详细讨论该模型。
 
-With visibility, fault isolation, and fault tolerance, we have the tools we need to identify failure, recover from failure, and provide a reasonable level of service to our customers while we’re engaging in the process of identification and recovery. Some failures are easy to identify: they present the same easily detecta‐ ble pattern every time they occur. Take the example of a service health check, which usually has a binary answer: healthy or unhealthy, up or down. Many times we’ll take the same course of action every time we encounter failures like these. In the case of the failed health check, we’ll often simply restart or redeploy the service in question. Cloud-native application architectures don’t wait for manual intervention in these situations. Instead, they employ automated detection and recovery. In other words, they let a computer wear the pager instead of a human.ScaleAs demand increases, we must scale our capacity to service that demand. In the past we handled more demand by scaling vertically: we bought larger servers. We eventually accomplished our goals, but slowly and at great expense. This led to capacity planning based on peak usage forecasting. We asked “what’s the most computing power this service will ever need?” and then purchased enough hardware to meet that number. Many times we’d get this wrong, and we’d still blow our available capacity during events like Black Friday. But more often we’d be saddled with tens or hundreds of servers with mostly idle CPU’s, which resulted in poor utilization metrics.
+**自动恢复**
 
-Innovative companies dealt with this problem through two pioneer‐ ing moves:
+凭借可视化、故障隔离和容错能力，我们拥有确定故障所需的工具，从故障中恢复，并在进行错误检测和故障恢复的过程中为客户提供合理的服务水平。一些故障很容易识别：它们在每次发生时呈现出相同的易于检测的模式。以服务健康检查为例，结果只有两个：健康或不健康，up或down。很多时候，每次遇到这样的故障时，我们都会采取相同的行动。在健康检查失败的情况下，我们通常只需重新启动或重新部署相关服务。云原生应用程序架构不要当应用在这些情况下无需手动干预。相反，他们会自动检测和恢复。换句话说，他们给电脑装上了寻呼机而不是人。
 
-- Rather than continuing to buy larger servers, they horizontallyscaled application instances across large numbers of cheapercommodity machines. These machines were easier to acquire(or assemble) and deploy quickly.
-- Poor utilization of existing large servers was improved by virtualizing several smaller servers in the same footprint and deploying multiple isolated workloads to them.
+## 弹性扩展
 
-As public cloud infrastructure like Amazon Web Services became available, these two moves converged. The virtualization effort was delegated to the cloud provider, and the consumer focused on horizontal scale of its applications across large numbers of cloud server instances. Recently another shift has happened with the move from virtual servers to containers as the unit of application deployment. We’ll discuss containers in “Containerization” on page 26.
+随着需求的增加，我们必须扩大服务能力。过去我们通过垂直扩展来处理更多的需求：购买了更强悍的服务器。我们最终实现了自己的目标，但是步伐太慢，并且产生了更多的花费。这导致了基于高峰使用预测的容量规划。我们会问”这项服务需要多大的计算能力？”然后购买足够的硬件来满足这个要求。很多时候我们依然会判断错误，会在如黑色星期五这类事件中打破我们的可用容量规划。但是，更多的时候，我们将会遇到数以百计的服务器，它们的CPU都是空闲的，这会让资源使用率指标很难看。
 
-This shift to the cloud opened the door for more innovation, as companies no longer required large amounts of startup capital to deploy their software. Ongoing maintenance also required a lower capital investment, and provisioning via API not only improved the speed of initial deployment, but also maximized the speed with which we could respond to changes in demand.
+创新型的公司通过以下两个开创性的举措来解决这个问题：
 
-Unfortunately all of these benefits come with a cost. Applications must be architected differently for horizontal rather than vertical scale. The elasticity of the cloud demands ephemerality. Not only must we be able to create new application instances quickly; we must also be able to dispose of them quickly and safely. This need is a question of state management: how does the disposable interact with the persistent? Traditional methods such as clustered sessions and shared filesystems employed in mostly vertical architectures do not scale very well.
+- 它们不再继续购买更大型的服务器，取而代之的是用大量的更便宜机器来水平扩展应用实例。这些机器更容易获得，并且能够快速部署。
 
-Another hallmark of cloud-native application architectures is the externalization of state to in-memory data grids, caches, and persistent object stores, while keeping the application instance itself essentially stateless. Stateless applications can be quickly created and destroyed, as well as attached to and detached from external state managers, enhancing our ability to respond to changes in demand. Of course this also requires the external state managers themselves to be scalable. Most cloud infrastructure providers have recognized this necessity and provide a healthy menu of such services.
+- 通过将大型服务器虚拟化成几个较小的服务器，并向其部署多个隔离的工作负载来改善现有大型服务器的资源利用率。
 
-## Mobile Applications and Client Diversity
+随着像亚马逊AWS这样的公有云基础设施的出现，这两个举措融合了起来。虚拟化工作被委托给云提供商，消费者只需要关注在大量的云服务器实例很想扩展它们的应用程序实例。最近，作为应用程序部署的单元，发生了另一个转变，从虚拟机转移到了容器。
 
-In January 2014, mobile devices accounted for 55% of Internet usage in the United States. Gone are the days of implementing applications targeted at users working on computer terminals tethered to desks. Instead we must assume that our users are walking around with multicore supercomputers in their pockets. This has serious impli‐ cations for our application architectures, as exponentially more users can interact with our systems anytime and anywhere.
+由于公司不再需要大量启动资金来部署软件，所以向云的转变打开了更多创新之门。正在进行的维护还需要较少的资本投入，并且通过API进行配置不仅可以提高初始部署的速度，还可以最大限度地提高我们应对需求变化的速度。
 
-Take the example of viewing a checking account balance. This task used to be accomplished by calling the bank’s call center, taking a trip to an ATM location, or asking a teller at one of the bank’s branch locations. These customer interaction models placed signifi‐ cant limits on the demand that could be placed on the bank’s under‐ lying software systems at any one time.
+不幸的是，所有这些好处都带有成本。相较于垂直扩展的应用，支持水平扩展的应用程序的架构必须不同。云的弹性要求应用程序的状态短暂性。我们不仅可以快速创建新的应用实例；我们也必须能够快速、安全地处置它们。这种需求是状态管理的问题：一次性与持久性相互作用如何？ 在大多数垂直架构中采用的诸如聚类会话和共享文件系统的传统方法并不能很好地支持水平扩展。
 
-The move to online banking services caused an uptick in demand, but still didn’t fundamentally change the interaction model. You still had to physically be at a computer terminal to interact with the system, which still limited the demand significantly. Only when we all began, as my colleague Andrew Clay Shafer often says, “walking around with supercomputers in our pockets,” did we start to inflict pain on these systems. Now thousands of customers can interact with the bank’s systems anytime and anywhere. One bank executive has said that on payday, customers will check their balances several times every few minutes. Legacy banking systems simply weren’t architected to meet this kind of demand, while cloud-native application architectures are.
+云原生应用程序架构的另一个标志是将状态外部化到内存数据网格，缓存和持久对象存储，同时保持应用程序实例本身基本上是无状态的。无状态应用程序可以快速创建和销毁，以及附加到外部状态管理器和脱离外部状态管理器，增强我们响应需求变化的能力。当然这也需要外部状态管理器自己来扩展。大多数云基础设施提供商已经认识到这一必要性，并提供了这类服务的健康菜单。
 
-The huge diversity in mobile platforms has also placed demands on application architectures. At any time customers may want to inter‐ act with our systems from devices produced by multiple different vendors, running multiple different operating platforms, running multiple versions of the same operating platform, and from devices of different form factors (e.g., phones vs. tablets). Not only does this place various constraints on the mobile application developers, but also on the developers of backend services.
+## 移动应用和客户端多样性
 
-Mobile applications often have to interact with multiple legacy systems as well as multiple microservices in a cloud-native application architecture. These services cannot be designed to support the unique needs of each of the diverse mobile platforms used by our customers. Forcing the burden of integration of these diverse serv‐ ices on the mobile developer increases latency and network trips, leading to slow response times and high battery usage, ultimately leading to users deleting your app. Cloud-native application architectures also support the notion of mobile-first development through design patterns such as the API Gateway, which transfers the burden of service aggregation back to the server-side. We’ll discuss the API Gateway pattern in “API Gateways/Edge Services” on page 47.
+2014年1月，美国移动设备占互联网使用量的55％。专门针对桌面用户而开发的应用程序的时代已经过去。不过，我们必须假设用户装在口袋里到处散步的是超级计算机。这对我们的应用架构有很大的影响，因为指数级用户可以随时随地与我们的系统进行交互。
+
+以查看银行账户余额为例。这项任务过去是通过拨打银行的呼叫中心，前往ATM，或者在银行的一个分支机构的向柜员请求完成的。这些客户互动模式在任何时间内，都会对银行为底层软件系统提出新需求产生极大的限制。
+
+迁移到网上银行导致访问量的上升，但并没有从根本上改变交互模式。您仍然必须在计算机终端上与系统进行交互，这仍然显著限制了需求。只有当我们都开始的时候，正如我的同事Andrew Clay Shafer经常说的那样，“我们口袋里正带着超级计算机到处游走”，我们开始对这些系统造成痛苦。 现在，成千上万的客户可以随时随地与银行系统进行互动。 一位银行行政人员表示，在发薪日，客户会每隔几分钟检查一次余额。 遗留的银行系统架构根本无法满足这种需求，而云原生的应用程序体系结构却可以。
+
+移动平台的巨大差异也对应用架构提出了要求。客户随时都可能与多个不同供应商生产的设备，运行多个不同的操作系统平台，运行多个版本的相同操作平台以及不同类别的设备（例如手机与平板电脑）进行交互。 这不仅对移动应用程序开发人员，还对后端服务的开发人员造成了各种限制。
+
+移动应用程序通常必须与多个传统系统以及云原生应用程序架构中的多个微服务进行交互。这些服务无法设计成支持客户使用的各种各样移动平台的独特需求。强迫这些这些不同的服务，为移动开发人员上带来了负担，增加了应用访问延迟和网络访问频率，导致应用响应慢、耗电量高，最终导致用户删除您的应用程序。云原生应用程序架构还通过诸如API网关之类的设计模式来支持移动优先开发的概念，API网关将服务聚合负担转移回服务器端。

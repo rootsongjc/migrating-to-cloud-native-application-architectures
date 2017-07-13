@@ -1,16 +1,18 @@
-# The Rise of Cloud-Native
+# 第1章 云原生的崛起
 
-*Software is eating the world.*
+*软件正在吞噬这个世界。—Mark Andreessen*
 
-—Mark Andreessen
+这些年来，在一些长期由领导者支配的行业中，这些领导者的领先地位已经岌岌可危，这都是由以这些行业为核心业务的软件公司造成的。像Square、Uber、Netflix、Airbnb和特斯拉这样的公司能够持续快速增长，并并拥有傲人的市场估值，成为它们所在行业的新领导者。这些创新公司有什么共同点？
 
-Stable industries that have for years been dominated by entrenched leaders are rapidly being disrupted, and they’re being disrupted by businesses with software at their core. Companies like Square, Uber, Netflix, Airbnb, and Tesla continue to possess rapidly growing private market valuations and turn the heads of executives of their industries’ historical leaders. What do these innovative companies have in common?
+- 快速创新
 
-- Speed of innovation
-- Always-available services
-- Web scale
-- Mobile-centric user experiences
+- 持续可用的服务
 
-Moving to the cloud is a natural evolution of focusing on software, and cloud-native application architectures are at the center of how these companies obtained their disruptive character. By cloud, we mean any computing environment in which computing, network‐ing, and storage resources can be provisioned and released elastically in an on-demand, self-service manner. This definition includes both public cloud infrastructure (such as Amazon Web Services,Google Cloud, or Microsoft Azure) and private cloud infrastructure(such as VMware vSphere or OpenStack).
+- 弹性可扩展的Web
 
-In this chapter we’ll explain how cloud-native application architectures enable these innovative characteristics. Then we’ll examine a few key aspects of cloud-native application architectures.
+- 以移动为核心的用户体验
+
+
+将软件迁移到云上是一种自演化，使用了云原生应用架构是这些公司能够如此具有破坏性的核心原因。通过云，任何能够按需、自助弹性提供和释放计算、网络和存储资源的计算环境。云的定义包括公有云(例如 Amazon Web Services、Google Cloud和Microsoft Azure)和私有云(例如 VMware vSphere和 OpenStack)。
+
+本章中我们将探讨云原生应用架构的创新性，然后验证云原生应用架构的主要特性。
