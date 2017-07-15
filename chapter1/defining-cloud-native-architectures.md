@@ -1,121 +1,114 @@
-# Defining Cloud-Native Architectures
+# 云原生架构定义
 
-Now we’ll explore several key characteristics of cloud-native application architectures. We’ll also look at how these characteristics address motivations we’ve already discussed.
+现在我们将探索云原生应用架构的几个主要特征，和这些特征是如何解决我们前面提到的使用云原生应用架构的动机。
 
-## Twelve-Factor Applications
+## 12因素应用
 
-The twelve-factor app is a collection of patterns for cloud-native application architectures, originally developed by engineers at Heroku. The patterns describe an application archetype that optimizes for the “why” of cloud-native application architectures. They focus on speed, safety, and scale by emphasizing declarative configuration, stateless/shared-nothing processes that horizontally scale, and an overall loose coupling to the deployment environment. Cloud application platforms like Cloud Foundry, Heroku, and Amazon ElasticBeanstalk are optimized for deploying twelve-factor apps.
+12因素应用是一系列云原生应用架构的模式集合，最初由Heroku提出。这些模式可以用来说明什么样的应用才是云原生应用。它们关注速度、安全、通过声明式配置扩展、可横向扩展的无状态/无共享进程以及部署环境的整体松耦合。如Cloud Foundry、Heroku和Amazon ElasticBeanstalk都对部署12因素应用进行了专门的优化。
 
-In the context of twelve-factor, application (or app) refers to a single deployable unit. Organizations will often refer to multiple collaborating deployables as an application. In this context, however, we will refer to these multiple collaborating deploy ables as a distributed system.
+在12因素的背景下，应用（或者叫app）指的是独立可部署单元。组织中经常吧一些列互相协作的可部署单元称作一个应用。
 
-A twelve-factor app can be described in the following ways:
+12因素应用遵循以下模式：
 
-**Codebase**
+**代码库**
 
-Each deployable app is tracked as one codebase tracked in revision control. It may have many deployed instances across multiple environments.
+每个可部署app在版本控制系统中都有一个独立的代码库，可以在不同的环境中部署多个实例。
 
-**Dependencies**
+**依赖**
 
-An app explicitly declares and isolates dependencies via appropriate tooling (e.g., Maven, Bundler, NPM) rather than depend‐ing on implicitly realized dependencies in its deployment environment.
+App应该使用适当的工具（如Maven、Bundler、NPM）来对依赖进行显式的声明，而不该在部署环境中隐式的实现依赖。
 
-**Config**
+**配置**
 
-Configuration, or anything that is likely to differ between deployment environments (e.g., development, staging, production) is injected via operating system-level environment variables.
+配置或其他随发布环境（如部署、staging、生产）而变更的部分应当作为操作系统级的环境变量注入。
 
-**Backing services**
+**后端服务**
 
-Backing services, such as databases or message brokers, aretreated as attached resources and consumed identically across all environments.
+后端服务，例如数据库、消息代理应视为附加资源，并在所有环境中同等看待。
 
-**Build, release, run**
+**编译、发布、运行**
 
-The stages of building a deployable app artifact, combining that artifact with configuration, and starting one or more processes from that artifact/configuration combination, are strictly separated.
+构建一个可部署的app组件并将它与配置绑定，根据这个组件/配置的组合来启动一个或者多个进程，这两个阶段是严格分离的。
 
-**Processes**
+**进程**
 
-The app executes as one or more stateless processes (e.g., master/workers) that share nothing. Any necessary state is externalized to backing services (cache, object store, etc.).
+该app执行一个或者多个无状态进程（例如master/work），它们之间不需要共享任何东西。任何需要的状态都置于后端服务（例如cache、对象存储等）。
 
-**Port banding**
+**端口绑定**
 
-The app is self-contained and exports any/all services via port binding (including HTTP).
+该应用程序是独立的，并通过端口绑定（包括HTTP）导出任何/所有服务。
 
-**Concurrency**
+**并发**
 
-Concurrency is usually accomplished by scaling out app processes horizontally (though processes may also multiplex work via internally managed threads if desired).
+并发通常通过水平扩展应用程序进程来实现（尽管如果需要的话进程也可以通过内部管理的线程多路复用来实现）。
 
-**Disposability**
+**可任意处置性**
 
-Robustness is maximized via processes that start up quickly and shut down gracefully. These aspects allow for rapid elastic scaling, deployment of changes, and recovery from crashes.
+通过快速迅速启动和优雅的终止进程，可以最大程度上的实现鲁棒性。这些方面允许快速弹性缩放、部署更改和从崩溃中恢复。
 
-**Dev/prod parity**
+**开发/生产平等**
 
-Continuous delivery and deployment are enabled by keeping development, staging, and production environments as similar as possible.
+通过保持开发、staging和生产环境尽可能的相同来实现持续交付和部署。
 
-**Logs**
+**日志**
 
-Rather than managing logfiles, treat logs as event streams, allowing the execution environment to collect, aggregate, index, and analyze the events via centralized services.
+不管理日志文件，将日志视为事件流，允许执行环境通过集中式服务收集、聚合、索引和分析事件。
 
-**Admin processes**
+**管理进程**
 
-Administrative or managements tasks, such as database migrations, are executed as one-off processes in environments identical to the app’s long-running processes.
+行政或管理类任务（如数据库迁移），应该在与app长期运行的相同的环境中一次性完成。
 
-These characteristics lend themselves well to deploying applications quickly, as they make few to no assumptions about the environments to which they’ll be deployed. This lack of assumptions allows the underlying cloud platform to use a simple and consistent mechanism, easily automated, to provision new environments quickly and to deploy these apps to them. In this way, the twelve-factor application patterns enable us to optimize for speed.
+这些特性很适合快速部署应用程序，因为它们不需要对将要部署的环境做任何假定。对环境假设能够允许底层云平台使用简单而一致的机制，轻松实现自动化，快速配置新环境，并部署应用。以这种方式，十二因素应用模式能够帮我们优化应用的部署速度。
 
-These characteristics also lend themselves well to the idea of ephemerality, or applications that we can “throw away” with very little cost.The application environment itself is 100% disposable, as any application state, be it in-memory or persistent, is extracted to some backing service. This allows the application to be scaled up and down in a very simple and elastic manner that is easily automated.In most cases, the underlying platform simply copies the existing environment the desired number of times and starts the processes.Scaling down is accomplished by halting the running processes and deleting the environments, with no effort expended backing up or otherwise preserving the state of those environments. In this way, the twelve-factor application patterns enable us to optimize for scale.
+这些特性也很好地适用于突发需求，或者低成本地“丢弃”应用程序。应用程序环境本身是100％一次性的，因为任何应用程序状态，无论是内存还是持久性，都被提取到后端服务。这允许应用程序以易于自动化的非常简单和弹性的方式进行伸缩。在大多数情况下，底层平台只需将现有环境复制到所需的数目并启动进程。缩容是通过暂停正在运行的进程和删除环境来完成，无需设法地实现备份或以其他方式保存这些环境的状态。就这样，12因素应用模式帮助我们实现规模优化。
 
-Finally, the disposability of the applications enables the underlying platform to automatically recover from failure events very quickly.
+最后，应用程序的可处理性使得底层平台能够非常快速地从故障事件中恢复。
 
-Furthermore, the treatment of logs as event streams greatly enables visibility into the underlying behavior of the applications at runtime.
-The enforced parity between environments and the consistency of
-configuration mechanisms and backing service management enable
-cloud platforms to provide rich visibility into all aspects of the appli‐
-cation’s runtime fabric. In this way, the twelve-factor application pat‐
-terns enable us to optimize for safety.
+此外，将日志作为事件流处理能够极大程度上的增强应用程序运行时底层行为的可见性。
 
-## Microservices
+强制环境之间的等同、配置机制的一致性和后端服务管理使云平台能够为应用程序运行时架构的各个方面提供丰富的可见性。以这种方式，十二因素应用模式能够优化安全性。
 
-Microservices represent the decomposition of monolithic business systems into independently deployable services that do “one thing well.” That one thing usually represents a business capability, or the smallest, “atomic” unit of service that delivers business value.
+## 微服务
 
-Microservice architectures enable speed, safety, and scale in sever always:
+微服务将单体业务系统分解为多个“仅做好一件事”的可独立部署的服务。这件事通常代表某项业务能力，或者最小可提供业务价值的“原子“服务单元。
 
-- As we decouple the business domain into independently deployable bounded contexts of capabilities, we also decouple the associated change cycles. As long as the changes are restricted to a single bounded context, and the service continues to fulfill its existing contracts, those changes can be made and deployed independent of any coordination with the rest of the business. The result is enablement of more frequent and rapid deployments, allowing for a continuous flow of value.
-- Development can be accelerated by scaling the development organization itself. It’s very difficult to build software faster by adding more people due to the overhead of communication and coordination. Fred Brooks taught us years ago that adding more people to a late software project makes it later. However, rather than placing all of the developers in a single sandbox, we can create parallel work streams by building more sandboxes through bounded contexts.
-- The new developers that we add to each sandbox can ramp up and become productive more rapidly due to the reduced cognitive load of learning the business domain and the existing code, and building relationships within a smaller team.
-- Adoption of new technology can be accelerated. Large mono‐lithic application architectures are typically associated withlong-term commitments to technical stacks. These commitments exist to mitigate the risk of adopting new technology bysimply not doing it. Technology adoption mistakes are moreexpensive in a monolithic architecture, as those mistakes canpollute the entire enterprise architecture. If we adopt new technology within the scope of a single monolith, we isolate and minimze the risk in much the same way that we isolate and minimize the risk of runtime failure.
-- Microservices offer independent, efficient scaling of services.Monolithic architectures can scale, but require us to scale all components, not simply those that are under heavy load. Microservices can be scaled if and only if their associated load requires it.
+微服务架构通过以下几种方式为速度、安全、可扩展性赋能：
 
-## Self-Service Agile Infrastructure
+- 当我们将业务领域分解为可独立部署的有限能力的环境的同时，也将相关的变更周期解耦。只要变更限于单一有限的环境，并且服务继续履行其现有合约，那么这些更改可以独立于与其他业务来进行和部署。结果是实现了更频繁和快速的部署，从而实现了持续的价值流动。
+- 通过扩展部署组织本身可以加快部署。由于沟通和协调的开销，添加更多的人，往往会使软件构建变得更加苦难。 弗雷德·布鲁克斯（Fred Brooks，人月神话作者）很多年前就教导我们，在软件项目的晚期增加更多的人力将会时软件项目更加延期。 然而，我们可以通过在有限的环境中构建更多的沙箱，而不是将所有的开发者都放在同一个沙箱中。
+- 由于学习业务领域和现有代码的认知负担减少，并建立了与较小团队的关系，因此我们添加到每个沙箱的新开发人员可以更快速地提高并变得更高效。
+- 可以加快采用新技术的步伐。大型单体应用程序架构通常与对技术堆栈的长期保证有关。这些保证的存在是为了减轻采用新技术的风险。技术采用错误在单体架构中的代价更为昂贵，因为这些错误可能会影响整个企业架构。如果我们可以在单个整体的范围内采用新技术，将隔离并最大限度地降低风险，就像隔离和最小运行时故障的风险一样。
+- 微服务提供独立、高效的服务扩展。单体架构也可以扩展，但要求我们扩展所有组件，而不仅仅是那些负载较重的组件。当且仅当相关联的负载需要它时，微服务才会被缩放。
 
-Teams developing cloud-native application architectures are typically responsible for their deployment and ongoing operations. Successful adopters of cloud-native applications have empowered teams with self-service platforms.
+## 自服务敏捷架构
 
-Just as we create business capability teams to build microservices foreach bounded context, we also create a capability team responsible for providing a platform on which to deploy and operate these microservices (“The Platform Operations Team” on page 22).
+使用云原生应用架构的团队通畅负责其应用的部署和持续运营。云原生应用的成功采纳者已经为团队提供了自服务平台。
 
-The best of these platforms raise the primary abstraction layer fortheir consumers. With infrastructure as a service (IAAS) we asked the API to create virtual server instances, networks, and storage, and then applied various forms of configuration management and automation to enable our applications and supporting services to run.Platforms are now emerging that allow us to think in terms of applications and backing services.
+正如我们创建业务能力团队为每个有界的环境构建微服务一样，我们还创建了一个能力小组，负责提供一个部署和运行这些微服务的平台。
 
-Application code is simply “pushed” in the form of pre-built artifacts (perhaps those produced as part of a continuous delivery pipe‐line) or raw source code to a Git remote. The platform then builds the application artifact, constructs an application environment, deploys the application, and starts the necessary processes. Teams do not have to think about where their code is running or how it got there, as the platform takes care of these types of concerns transparently.
+这些平台中最大好处是为消费者提供主要的抽象层。通过基础架构即服务（IAAS），我们要求API创建虚拟服务器实例、网络和存储，然后应用各种形式的配置管理和自动化，以使我们的应用程序和支持服务能够运行。现在这种允许我们自定义应用和支持服务的平台正在不断涌现。
 
-The same model is supported for backing services. Need a database?How about a message queue or a mail server? Simply ask the plat‐form to provision one that fits your needs. Platforms now support a wide range of SQL/NoSQL data stores, message queues, search engines, caches, and other important backing services. These service instances can then be “bound” to your application, with necessary credentials automatically injected into your application’s environment for it to consume. A great deal of messy and error-prone be spoke automation is thereby eliminated.
+应用程序代码简单地以预构建的工件（可能是作为持续交付管道的一部分生成的）或Git远程的原始源代码的形式“推送”。 然后，平台构建应用程序工件，构建应用程序环境，部署应用程序，并启动必要的进程。 团队不必考虑他们的代码在哪里运行或如何到达那里，这些对用户都是透明得，因为平台会关注这些。
 
-These platforms also often provide a wide array of additional operational capabilities:
+这样的模型同样适合于后端服务。需要数据库？ 消息队列或邮件服务器？ 只需要求平台来配合您的需求。平台现在支持各种SQL/NoSQL数据存储、消息队列、搜索引擎、缓存和其他重要的后端服务。这些服务实例然后可以“绑定”到您的应用程序，必要的凭据会自动注入到应用程序的环境中以供其使用。从而消除了大量凌乱而易出错的定制自动化。
 
-- Automated and on-demand scaling of application instances
+这些平台还经常提供广泛的额外操作能力：
 
-- Application health management
+- 应用程序实例的自动化和按需扩展
+- 应用健康管理
+- 请求到或跨应用程序实例间的动态路由和负载均衡
+- 日志和指标的聚合
 
-- Dynamic routing and load balancing of requests to and acrossapplication instances
+这种工具的组合确保了能力团队能够根据敏捷原则开发和运行服务，从而实现速度，安全性和规模化。
 
-- Aggregation of logs and metrics
+## 基于API的协作
 
-This combination of tools ensures that capability teams are able to develop and operate services according to agile principles, again enabling speed, safety, and scale.
+在云原生应用程序架构中，服务之间的唯一互动模式是通过已发布和版本化的API。这些API通常是具有JSON序列化的HTTP REST风格，但也可以是其他协议和序列化格式。
 
-## API-Based Collaboration
+只要有需要，在不会破坏任何现有的API协议的前提下，团队就可以部署新的功能，而不需要与其他团队进行同步。 自助服务基础设施平台的主要交互模式也是通过API，就像其他业务服务一样。供给、缩放和维护应用程序基础设施的方式不是通过提交票据，而是将这些请求提交给提供该服务的API。
 
-The sole mode of interaction between services in a cloud-native application architecture is via published and versioned APIs. TheseAPIs are typically HTTP REST-style with JSON serialization, but can use other protocols and serialization formats.
+通过消费者驱动的协议，可以在服务间交互的双方验证协议的合规性。服务消费者不能访问其依赖关系的私有实现细节，或者直接访问其依赖关系的数据存储。实际上，只允许有一个服务能够直接访问任何数据存储。这种强制解耦直接支持云原生的速度目标。
 
-Teams are able to deploy new functionality whenever there is a need, without synchronizing with other teams, provided that they do not break any existing API contracts. The primary interaction model for the self-service infrastructure platform is also an API, just as it is with the business services. Rather than submitting tickets to provision, scale, and maintain application infrastructure, those same requests are submitted to an API that automatically services the requests.
+## 抗脆弱性
 
-Contract compliance can be verified on both sides of a service-to-service interaction via consumer-driven contracts. Service consumers are not allowed to gain access to private implementation details of their dependencies or directly access their dependencies’ data stores. In fact, only one service is ever allowed to gain direct access to any data store. This forced decoupling directly supports the  cloud-native goal of speed.
-
-## Antifragility
-
-The concept of antifragility was introduced in Nassim Taleb’s book Antifragile (Random House). If fragility is the quality of a system that gets weaker or breaks when subjected to stressors, then what is the opposite of that? Many would respond with the idea of robust‐ness or resilience—things that don’t break or get weaker when subjected to stressors. However, Taleb introduces the opposite of fragility as antifragility, or the quality of a system that gets stronger when subjected to stressors. What systems work that way? Consider the human immune system, which gets stronger when exposed to pathogens and weaker when quarantined. Can we build architectures that way? Adopters of cloud-native architectures have sought to build them. One example is the Netflix Simian Army project, with the famous submodule “Chaos Monkey,” which injects random failures into production components with the goal of identifying and eliminating weaknesses in the architecture. By explicitly seeking out weaknesses in the application architecture, injecting failures, and forcing their remediation, the architecture naturally converges on a greater degree of safety over time.			
-  ​
+Nassim Taleb在他的Antifragile（Random House）一书中介绍了抗脆弱性的概念。如果脆弱性是受到压力源的弱化或破坏的质量系统，那么与之相反呢？许多人会以稳健性或弹性作出回应——在遭受压力时不会被破坏或变弱。然而，Taleb引入了与脆弱性相反的抗脆弱性概念，或者在受到压力源时变得更强的质量系统。什么系统会这样工作？联想下人体免疫系统，当接触病原体时，其免疫力变强，隔离时较弱。我们可以像这样建立架构吗？云原生架构的采用者们已经设法构建它们了。Netflix Simian Army项目就是个例子，其中着名的子模块“混沌猴”，它将随机故障注入到生产组件中，目的是识别和消除架构中的缺陷。通过明确地寻求应用程序架构中的弱点，注入故障并强制进行修复，架构自然会随着时间的推移而更大程度地收敛。
