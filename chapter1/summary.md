@@ -1,44 +1,43 @@
-# Summary
+# 本章小结
 
-In this chapter we’ve examined the common motivations for movingto cloud-native application architectures in terms of abilities that wewant to provide to our business via software:
+本章中，我们讨论了希望通过软件赋予我们业务的能力并迁移到云原生应用架构的动机：
 
-**Speed**
+**速度**
 
-The ability to innovate, experiment, and deliver value more quickly than our competitors.
+比我们的竞争对手更快速得创新、试验并传递价值。
 
-**Safety**
+**安全**
 
-The ability to move rapidly but also maintain stability, availability, and durability.
+在保持稳定性、可用性和持久性的同时，具有快速行动的能力。
 
-**Scale**
+**扩展**
 
-The ability to elastically respond to changes in demand.
+根据需求变化弹性扩展。
 
-**Mobility**
+**移动性**
 
-The ability for our customers to interact with us seamlessly from any location, on any device, and at any time.
+客户可以随时随地通过任何设备无缝的跟我们交互。
 
-We’ve also examined the unique characteristics of cloud-native application architectures and how they can help us provide these abilities:
+我们还研究了云原生应用架构的独特特征，以及如何赋予我们这些能力：
 
-**Twelve-factor applications**
+**12因素应用程序**
 
-A set of patterns that optimize application design for speed, safety, and scale.
+一套优化应用程序设计速度，安全性和规模的模式。
 
-**Microservices**
+**微服务**
 
-An architecture pattern that helps us align our units of deployment with business capabilities, allowing each capability to move independently and autonomously, and in turn faster and safer.
+一种架构模式，可帮助我们将部署单位与业务能力保持一致，使每个业务能够独立和自主地移动，这样一来也更快更安全。
 
-**Self-service agile infrastructure**
+**自服务敏捷基础设施**
 
-Cloud platforms that enable development teams to operate at an application and service abstraction level, providing infrastructure-level speed, safety, and scale.
+云平台使开发团队能够在应用程序和服务抽象层面上运行，提供基础架构级速度，安全性和扩展性。
 
-**API-based collaboration**
+**基于API的协作**
 
-An architecture pattern that defines service-to-service interaction as automatically verifiable contracts, enabling speed and safety through simplified integration work.
+将服务间交互定义为可自动验证协议的架构模式，通过简化的集成工作实现速度和安全性。
 
-**Antifragility**
+**抗脆弱性**
 
-As we increase stress on the system via speed and scale, the system improves its ability to respond, increasing safety.
+随着速度和规模扩大，系统的压力随之增加，系统的响应能力和安全性也随之提高。
 
-In the next chapter we’ll examine a few of the changes that most enterprises will need to make in order to adopt cloud-native application architectures.
-
+在下一章中，我们将探讨大多数企业为采用云原生应用程序架构而需要做出哪些改变。
