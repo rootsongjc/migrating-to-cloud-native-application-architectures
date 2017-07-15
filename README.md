@@ -4,6 +4,10 @@
 
 中文版地址：[https/github.com/rootsongjc/migrating-to-cloud-native-application-architectures](https/github.com/rootsongjc/migrating-to-cloud-native-application-architectures)
 
+Gitbook阅读地址：https://rootsongjc.gitbooks.io/moving-to-cloud-native-archtecture
+
+[文章目录](SUMMARY.md)
+
 当前很多企业正在采用云原生应用程序架构，这可以帮助其IT转型，成为市场竞争中真正敏捷的力量。 O'Reilly的报告中定义了云原生应用程序架构的特性，如微服务和十二因素应用程序。
 
 本书中作者Matt Stine还探究了将传统的单体应用和面向服务架构（SOA）应用迁移到云原生架构所需的文化、组织和技术变革。本书中还有一个迁移手册，其中包含将单体应用程序分解为微服务，实施容错模式和执行云原生服务的自动测试的方法。
