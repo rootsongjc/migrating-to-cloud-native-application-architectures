@@ -1,76 +1,71 @@
-# Cultural Change
+# 文化变革
 
-A great deal of the changes necessary for enterprise IT shops to adopt cloud-native architectures will not be technical at all. They will be cultural and organizational changes that revolve around eliminating structures, processes, and activities that create waste. In this section we’ll examine the necessary cultural shifts.
+企业IT采用云原生架构所需的变革根本不是技术性的，而是企业文化和组织的变革，围绕消除造成浪费的结构、流程和活动。 在本节中，我们将研究必要的文化转变。
 
-## From Silos to DevOps
+## 从信息孤岛到DevOps
 
-Enterprise IT has typically been organized into many of the follow‐ing silos:
+企业IT通常被组织成以下许多孤岛：
 
-- Software development
-- Quality assurance
-- Database administration
-- System administration
-- IT operations
-- Release management
-- Project management
+- 软件开发
+- 质量保证
+- 数据库管理
+- 系统管理
+- IT运营
+- 发布管理
+- 项目管理
 
-These silos were created in order to allow those that understand a given specialty to manage and direct those that perform the work of that specialty. These silos often have different management hierarchies, toolsets, communication styles, vocabularies, and incentive structures. These differences inspire very different paradigms of the purpose of enterprise IT and how that purpose should be accomplished.
+创建这些孤岛是为了让那些了解特定领域的人员来管理和指导那些执行该专业领域工作的人员。 这些孤岛通常具有不同的管理层次，工具集、沟通风格、词汇表和激励结构。这些差异启发了企业IT目标的不同范式，以及如何实现这一目标。
 
-An often cited example of these conflicting paradigms is the view of change possessed by the development and operations organizations.Development’s mission is usually viewed as delivering additional value to the organization through the development of software features. These features, by their very nature, introduce change into theIT ecosystem. So development’s mission can be described as “delivering change,” and is very often incentivized around how much change it delivers.
+开发和运维分别对软件变更持有的观念就是个经常被提起的关于这些矛盾模式的例子。 开发的任务通常被视为通过开发软件功能为组织提供额外的价值。 这些功能本身就是向IT生态系统引入变更。 所以开发的使命可以被描述为“交付变化”，而且经常根据有多少次变更来进行激励。
 
-Conversely, IT operations’ mission can be described as that of “pre‐venting change.” How? IT operations is usually tasked with main‐taining the desired levels of availability, resiliency, performance, anddurability of IT systems. Therefore they are very often incentivized to maintain key perfomance indicators (KPIs) such as mean time between failures (MTBF) and mean time to recovery (MTTR). One of the primary risk factors associated with any of these measures is the introduction of any type of change into the system. So, rather than find ways to safely introduce development’s desired changes into the IT ecosystem, the knee-jerk reaction is often to put processes in place that make change painful, and thereby reduce the rate of change.
+相反，IT运营的使命可以被描述为“防止变更”。 IT运营通常负责维护IT系统所需的可用性、弹性、性能和耐用性。因此，他们经常以维持关键绩效指标（KPI）来进行激励，例如平均故障间隔时间（MTBF）和平均恢复时间（MTTR）。与这些措施相关的主要风险因素之一是在系统中引入任何类型的变更。 那么，不是设法将开发期望的变更安全地引入IT生态系统，而是通过将流程放在一起，使变更变得痛苦，从而降低了变化率。
 
- These differing paradigms obviously lead to many additional suboptimal collaborations. Collaboration, communication, and simple handoff of work product becomes tedious and painful at best, and absolutely chaotic (even dangerous) at worst. Enterprise IT often tries to “fix” the situation by creating heavyweight processes driven by ticket-based systems and committee meetings. And the enterprise IT value stream slows to a crawl under the weight of all of the nonvalue-adding waste.
+这些不同的范式显然导致了许多额外的工作。项目工作中的协作、沟通和简单的交接变得乏味和痛苦，最糟糕的是导致绝对混乱（甚至是危险的）。 企业IT通常通过创建基于票据的系统和委员会会议驱动的复杂流程来尝试“修复”这种情况。企业IT价值流在所有非增值浪费下步履瞒珊。
 
-Environments like these are diametrically opposed to the cloud-native idea of speed. Specialized silos and process are often motivated by the desire to create a safe environment. However they usually offer very little additional safety, and in some cases, make things worse!
+像这样的环境与云原生的速度思想背道而驰。 专业的信息孤岛和流程往往是由创造安全环境的愿望所驱动。然而，他们通常提供很少的附加安全性，在某些情况下，会使事情变得更糟！
 
-At its heart, DevOps represents the idea of tearing down these silo sand building shared toolsets, vocabularies, and communication structures in service of a culture focused on a single goal: delivering value rapidly and safely. Incentive structures are then created that rein force and award behaviors that lead the organization in the direction of that goal. Bureaucracy and process are replaced by trust and accountability.
+在其核心上，DevOps代表着这样一种思想，即将这些信息孤岛构建成共享的工具集、词汇表和沟通结构，以服务于专注于单一目标的文化：快速、安全得交付价值。 然后创建激励结构，强制和奖励领导组织朝着这一目标迈进的行为。 官僚主义和流程被信任和责任所取代。
 
-In this new world, development and IT operations report to the same immediate leadership and collaborate to find practices that support both the continuous delivery of value and the desired levels of availability, resiliency, performance, and durability. Today these context-sensitive practices increasingly include the adoption of cloud-native application architectures that provide the technological support needed to accomplish the organization’s new shared goals.
+在这个新的世界中，开发和IT运营部门向共同的直接领导者汇报，并进行合作，寻找能够持续提供价值并获得期望的可用性、弹性、性能和耐久性水平的实践。今天，这些对背景敏感的做法越来越多地包括采用云原生应用架构，提供完成组织的新的共同目标所需的技术支持。
 
-## From Punctuated Equilibrium to Continuous Delivery
+## 从间断均衡到持续交付
 
-Enterprises have often adopted agile processes such as Scrum, but only as local optimizations within development teams.
+企业经常采用敏捷流程，如Scrum，但是只能作为开发团队内部的本地优化。
 
-As an industry we’ve actually become fairly successful in transition‐ing individual development teams to a more agile way of working.We can begin projects with an inception, write user stories, and carry out all the routines of agile development such as iteration planning meetings, daily standups, retrospectives, and customer showcase demos. The adventurous among us might even venture into engineering practices like pair programming and test-driven development. Continuous integration, which used to be a fairly radical concept, has now become a standard part of the enterprise soft‐ware lexicon. In fact, I’ve been a part of several enterprise softwareteams that have established highly optimized “story to demo” cycles,with the result of each development iteration being enthusiasticallyaccepted during a customer demo.
+在这个行业中，我们实际上已经成功地将个别开发团队转变为更灵活的工作方式。 我们可以这样开始项目，撰写用户故事，并执行敏捷开发的所有例程，如迭代计划会议，日常站会，回顾和客户展示demo。 我们中的冒险者甚至可能会冒险进行工程实践，如结对编程和测试驱动开发。持续集成，这在以前是一个相当激进的概念，现在已经成为企业软件词典的标准组成部分。事实上，我已经是几个企业软件团队中的一部分，并建立了高度优化的“故事到演示”周期，每个开发迭代的结果在客户演示期间被热烈接受。
 
-But then these teams would receive that dreaded question:When can we see these features in our production environment?
+但是，这些团队会遇到可怕的问题：我们什么时候可以在生产环境中看到这些功能？
 
-   This question is the most difficult for us to answer, as it forces us toconsider forces that are beyond our control:
+这个问题是我们很难回答，因为它迫使我们考虑我们无法控制的力量：
 
--    How long will it take for us to navigate the independent quality assurance process?
+- 我们需要多长时间才能浏览独立的质量保证流程？
+- 我们什么时候可以加入生产发布的行列中？
+- 我们可以让IT运营及时为我们提供生产环境吗？
 
--    When will we be able to join a production release train?
+在这一点上，我们意识到自己已经陷入了戴维·韦斯特哈斯（Dave Westhas）所说的scrum瀑布中了。 我们的团队已经开始接受敏捷原则，但我们的组织却没有。所以，不是每次迭代产生一次生产部署（这是敏捷宣言的原始出发点），代码实际上是批量参与一个更传统的下游发布周期。
 
--    Can we get IT operations to provision a production environment for us in time?
+这种操作风格产生直接的后果。我们不是每次迭代都将价值交付给客户，并将有价值的反馈回到开发团队，我们继续保持“间断均衡”的交付方式。 间断均衡实际上丧失了敏捷交付的两个主要优点：
 
-It’s at this point that we realize we’re embedded in what Dave Westhas called the water scrum fall. Our team has moved on to embrace agile principles, but our organization has not. So, rather than eachiteration resulting in a production deployment (this was the original intent behind the Agile Manifesto value of working so ware), the code is actually batched up to participate in a more traditional downstream release cycle.
+- 客户可能需要几周的时间才能看到软件带来的新价值。 他们认为，这种新的敏捷工作方式只是“像往常一样”，不会增强对开发团队的信任。 因为他们没有看到可靠的交付节奏，他们回到了以前的套路将尽可能多的要求尽可能多地堆放到发布版上。 为什么？ 因为他们对软件能够很快发布没有信心，他们希望尽可能多的价值被包括在最终交付时。
+- 开发团队可能会好几周都没有得到真正的反馈。虽然演示很棒，但任何经验丰富的开发人员都知道，只有真实用户参与到软件之中才能获得最佳反馈。这些反馈能够帮助软件修正，使团队去做正确的事情。反馈推迟后，错误的可能性只能增加，并带来昂贵的返工。
 
-This operating style has direct consequences. Rather than each iteration resulting in value delivered to the customer and valuable feed‐back pouring back into the development team, we continue a “punctuated equilibrium” style of delivery. Punctuated equilibrium actually short-circuits two of the key benefits of agile delivery:
+获得云原生应用程序体系结构的好处需要我们转变为持续交付。 我们拥抱端到端拥抱价值的原则，而不是Water Scrum Fall组织驱动的间断平衡。设想这样一个生命周期的模型是由Mary和Tom Poppendieck在《实施精益软件开发（Addison-Wesley）》一书中描述的“概念到现金”的想法中提出来的。 这种方法考虑了所有必要的活动，将业务想法从概念传递到创造利润的角度，并构建可以使人们和过程达到最佳目标的价值流。
 
-- Customers will likely go several weeks without seeing new value in the software. They perceive that this new agile way of work‐ing is just “business as usual,” and do not develop the promisedincreased trust relationship with the development team.Because they don’t see a reliable delivery cadence, they revert totheir old practices of piling as many requirements as possibleinto releases. Why? Because they have little confidence that any software delivery will happen soon, they want as much value as possible to be included when it finally does occur.
-- Teams may go several weeks without real feedback. Demos are great, but any seasoned developer knows that the best feedback comes only after real users engage with production software.That feedback provides valuable course corrections that enable teams to “build the right thing.” By delaying this feedback, the likelihood that the wrong thing gets built only increases, along with the associated costly rework.
+我们技术上支持这种使用连续交付的工程实践的方法，每次迭代（实际上是次每个源代码提交！）都被证明可以以自动化的方式部署。 我们构建部署流水线，可自动执行每次测试，如果该测试失败，将会阻止生产部署。 唯一剩下的决定是商业决策：现在部署可用的新功能有很好的业务意义吗？ 我们已经知道它已经如广告中的方式工作，但是我们要现在就把它们交给客户吗？ 因为部署管道是完全自动化的，所以企业能够通过点击按钮来决定是否采取行动。
 
-Gaining the benefits of cloud-native application architectures requires a shift to continuous delivery. Rather than punctuated equilibrium driven by a water scrum fall organization, we embrace the principles of value from end to end. A useful model for envisioning such a lifecycle is the idea of “Concept to Cash” described by Maryand Tom Poppendieck in their book Implementing Lean So wareDevelopment (Addison-Wesley). This approach considers all of theactivities necessary to carry a business idea from its conception tothe point where it generates profit, and constructs a value streamaligning people and process toward the optimal achievement of thatgoal.
+## 从集中治理到分散自治
 
-We technically support this way of working with the engineering practices of continuous delivery, where every iteration (in fact, every source code commit!) is proven to be deployable in an automatedfashion. We construct deployment pipelines which automate every test which would prevent a production deployment should that test fail. The only remaining decision to make is a business decision:does it make good business sense to deploy the available new fea‐tures now? We already know they work as advertised, so do we wantto give them to our customers? And because the deployment pipe‐line is fully automated, the business is able to act on that decision with the click of a button.
+Waterscrumfall文化中的一部分已经被特别提及，因为它已经被视为云原生架构采纳的一个关键。
 
-## Centralized Governance to Decentralized Autonomy
+企业通常采用围绕应用架构和数据管理的集中治理结构，负责维护指导方针和标准的委员会，以及批准个人设计和变更。 集中治理旨在帮助解决以下几个问题：
 
-   One portion of the waterscrumfall culture merits a special mention,as I have seen it become a real sticking point in cloud-native adop‐tion.
+-    可以防止技术栈的大范围不一致，降低组织的整体维护负担。
+-    可以防止架构选型中的大范围不一致，从而形成组织的应用程序开发的共同观点。
+-    整个组织可以一致地处理跨部门关切，例如合规性。
+-    数据所有权可由具有全局视野的人来决定。
 
-   Enterprises normally adopt centralized governance structuresaround application architecture and data management, with com‐mittees responsible for maintaining guidelines and standards, aswell as approving individual designs and changes. Centralized gov‐ernance is intended to help with a few issues:
+之所以创造这些结构，是因为我们相信它们将有助于提高质量、降低成本或两者兼而有之。然而，这些结构很少能够帮助我们提高质量节约成本，并且进一步妨碍了云原生应用架构寻求的交付速度。 正如单体应用程序架构导致了限制技术创新速度的瓶颈一样，单一的治理结构同样如此。架构委员会经常只会定期召集，并且经常需要很长的等待时才能发挥工作。即使是很小的数据模型的变化——可能在几分钟或几个小时内完成的更改，即将被委员会批准的变更——将会把时间浪费在一个不断增长的待办事项中。
 
--    It can prevent widespread inconsistencies in technology stacks, decreasing the overall maintenance burden for the organization.
+采用云原生应用程序架构时通常都会与分散式治理结合起来。建立云原生应用程序的团队拥有他们负责交付的能力的所有方面。他们拥有和管理数据、技术栈、应用程序架构、每个组件设计和API协议并将它们交付给组织的其余部分。如果需要对某事作出决策，则由团队自主制定和执行。
 
--    It can prevent widespread inconsistencies in architectural choices, allowing for a common view of application development across the organization.
-
--    Cross-cutting concerns like regulatory compliance can be handled in a consistent way for the entire organization.
-
--    Ownership of data can be determined by those who have abroad view of all organizational concerns.
-
-These structures are created with the belief that they will result in higher quality, lower costs, or both. However, these structures rarelyresult in the quality improvements or cost savings desired, and fur‐ther prevent the speed of delivery sought from cloud-native applica‐tion architectures. Just as monolithic application architectures can create bottlenecks which limit the speed of technical innovation, monolithic governance structures can do the same. Architectural committees often only assemble periodically, and long waiting queues of work often ensue. Even small data model changes—changes that could be implemented in minutes or hours, and that would be readily approved by the committee—lay wasting in a never-growing stack of to-do items.
-
-Adoption of cloud-native application architectures is almost always coupled with a move to decentralized governance. The teams build‐ing cloud-native applications (“Business Capability Teams” on page21) own all facets of the capability they’re charged with delivering.They own and govern the data, the technology stack, the application architecture, the design of individual components, and the API con‐tract delivered to the remainder of the organization. If a decision needs to be made, it’s made and executed upon autonomously by the team.
-
-The decentralization and autonomy of individual teams is balanced by minimal, lightweight structures that are imposed on the integration patterns used between independently developed and deployed services (e.g., they prefer HTTP REST JSON APIs rather than many different styles of RPC). These structures often emerge through grass roots adoption of solutions to cross-cutting problems like fault tolerance. Teams are encouraged to devise solutions to these problems locally, and then self-organize with other teams to establish common patterns and frameworks. As a preferred solution for the  entire organization emerges, ownership of that solution is very often transfered to a cloud frameworks/tools team, which may or may not be embedded in the platform operations team (“The Platform Operations Team” on page 22). This cloud frameworks/tools team will  often pioneer solutions as well while the organization is reforming around a shared understanding of the architecture.
+团队个体的分散自治和自主性是通过最小化、轻量级的结构进行平衡的，这些结构在可独立开发和部署的服务之间使用集成模式（例如，他们更喜欢HTTP REST JSON API而不是不同风格的RPC）来实现。这些结构通常会在底层解决交叉问题，如容错。激励团队自己设法解决这些问题，然后自发组织与其他团队一起建立共同的模式和框架。随着整个组织中的最优解决方案出现，该解决方案的所有权通常被转移到云框架/工具团队，这可能嵌入到平台运营团队中也可能不会。当组织正在围绕对架构共识进行改革时，云框架/工具团队通常也将开创解决方案。
