@@ -1,37 +1,37 @@
-# Organizational Change
+# 组织变革
 
-In this section we’ll examine the necessary changes to how organizations create teams when adopting cloud-native application architectures. The theory behind this reorganization is the famous observa‐tion known as Conway’s Law. Our solution is to create a team com‐bining staff with many disciplines around each long-term product,instead of segregating staff that have a single discipline in each ownteam, such as testing.
+在本节中，我们将探讨采用云原生应用程序架构的组织在创建团队时需要进行的变革。这个重组背后的理论是著名的康威定律。我们的解决方案是在长周期的产品开发中，创建一个包含了各方面专业员工的团队，而不是将他们分离在单一的团队中，例如测试人员。
 
-## Business Capability Teams
+## 业务能力团队
 
-Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization’s communication structure.
+设计系统的组织，最终产生的设计等同于组织之内、之间的沟通结构。
 
 —Melvyn Conway
 
-We’ve already discussed in “From Silos to DevOps” on page 15 the practice of organizing IT into specialized silos. Quite naturally, having created these silos, we have also placed individuals into team saligned with these silos. But what happens when we need to build anew piece of software?
+我们已经讨论了“从孤岛到DevOps”将IT组织成专门的信息孤岛的做法。我们很自然地创造了这些孤岛，并把个体放到与这些孤岛一致的团队中。但是当我们需要构建一个新的软件的时候会怎么样？
 
-A very common practice is to commission a project team. The team is assigned a project manager, and the project manager then collaborates with various silos to obtain “resources” for each specialty needed to staff the project. Part of what we learn from Conway’sLaw, quoted above, is that these teams will then very naturally produce in their system design the very silos from which they hail. And so we end up with siloed architectures having modules aligned with the silos themselves:
+一个很常见的做法是成立一个项目团队。该团队向项目经理汇报，然后项目经理与各种孤岛合作，为项目所需的各个专业领域寻求“资源”。正如康威定律所言，这些团队将很自然地在系统中构筑起各种孤岛，我们最终得到的是联合各种孤岛相对应的孤立模块的架构：
 
-- Data access tier
-- Services tier
-- Web MVC tier
-- Messaging tier
-- Etc.
+- 数据访问层
+- 服务层
+- Web MVC层
+- 消息层
+- 等等
 
-Each of these tiers spans multiple identifiable business capabilities, making it very difficult to innovate and deploy features related to one business capability independently from the others.
+这些层次中的每一层都跨越了多个业务能力领域，使得在其之上的创新和部署独立于其他业务能力的新功能变的非常困难。
 
-Companies seeking to move to cloud-native architectures like microservices segregated by business capability have often employed what Thoughtworks has called the Inverse Conway Maneuver.Rather than building an architecture that matches their org chart, they determine the architecture they want and restructure their organization to match that architecture. If you do that, according toConway, the architecture that you desire will eventually emerge.
+寻求迁移到将业务能力分离的微服务等云原生架构的公司经常采用Thoughtworks称之为的“逆康威定律”。他们没有建立一个与其组织结构图相匹配的架构，而是决定了他们想要的架构，并重组组织以匹配该架构。如果你这样做，根据康威，你所期望的架构最终会出现。
 
-   So, as part of the shift to a DevOps culture, teams are organized ascross-functional, business capability teams that develop productsrather than projects. Products are long-lived efforts that continueuntil they no longer provide value to the business. (You’re donewhen your code is no longer in production!) All of the roles neces‐sary to build, test, deliver, and operate the service delivering a busi‐ness capability are present on a team, which doesn’t hand off code toother parts of the organization. These teams are often organized as“two-pizza teams”, meaning that the team is too big if it cannot befed with two pizzas.
+因此，作为转向DevOps文化的一部分，我们组织了跨职能、业务能力的团队，开发的是产品而不再是项目。开发产品需要长期的付出，直到它们不再为企业提供价值为止。（直到你的代码不再运行在生产上为止！）构建、测试、交付和运营提供业务能力的服务所需的所有角色都存在于一个团队中，该团队不会交接代码到组织到的其他部分。这些团队通常被组织为“双比萨队”，意思是如果不能用两个比萨饼喂饱，那就意味着团队规模太大了。
 
-   What remains then is to determine what teams to create. If we fol‐low the Inverse Conway Maneuver, we’ll start with the domainmodel for the organization, and seek to identify business capabilitiesthat can be encapsulated within bounded contexts (which we’ll coverin “Decomposing Data” on page 24). Once we identify these capabil‐ities, we create business capability teams to own them throughouttheir useful lifecycle. Business capability teams own the entiredevelopment-to-operations lifecycle for their applications.
+那么剩下的就是确定要创建的团队。如果我们遵循逆康威定律，我们将从组织的领域模型开始，并寻求可以封装在有限环境中的业务能力。一旦我们确定了这些能力，我们就可以创建为这些业务能力的整个生命周期负责的团队。 业务能力团队掌握其应用程序从开发到运营的整个生命周期。
 
-## The Platform Operations Team
+## 平台运营团队
 
-The business capability teams need to rely on the self-service agile infrastructure described earlier in “Self-Service Agile Infrastructure”on page 11. In fact, we can express a special business capability defined as “the ability to develop, deploy, and operate business capabilities.” This capability is owned by the platform operations team.
+业务能力团队需要依赖于我们前面提到的”自助敏捷基础架构“。
 
-The platform operations team operates the self-service agile infra‐structure platform leveraged by the business capability teams. This team typically includes the traditional system, network, and storage administrator roles. If the company is operating the cloud platform on premises, this team also either owns or collaborates closely with teams managing the data centers themselves, and understands the hardware capabilities necessary to provide an infrastructure plat‐form.
+事实上，我们可以这样来描述一种特殊的业务能力——开发、部署和运营业务的能力。这种能力应该是平台运营团队所具有的。
 
-IT operations has traditionally interacted with its customers via avariety of ticket-based systems. Because the platform operation steam operates a self-service platform, it must interact differently.Just as the business capability teams collaborate with one another around defined API contracts, the platform operations team presents an API contract for the platform. Rather than queuing up requests for application environments and data services to be provisioned, business capability teams are able to take the leaner approach of building automated release pipelines that provision environments and services on-demand.
+平台运营团队运营自助敏捷基础架构平台，并交付给业务能力团队使用。该团队通常包括传统的系统、网络和存储管理员角色。如果公司正在运营云平台，该团队也将拥有管理数据中心的团队或与他们紧密合作，并了解提供基础架构平台所需的硬件能力。
 
-   ​
+IT运营传统上通过各种基于单据的系统与客户进行互动。由于基于平台操作流来运行自助服务平台，因此必须提供不同形式的交互方式。正如业务能力团队之间通过定义好的API协议相互协作一样，平台运营团队也为该平台提供了API协议。业务能力团队不再需要排队申请应用环境和数据服务，而是采用更精简的方式构建按需申请环境和服务的自动化发布管道。
