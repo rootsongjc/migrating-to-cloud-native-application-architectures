@@ -1,63 +1,58 @@
-# Technical Change
+# 技术变革
 
-Now we can turn to some implementation issues in moving to a DevOps platform in the cloud.
+现在我们将一些问题转移到了云中的DevOps平台。
 
-## Decomposing Monoliths
+## 分解单体
 
-Traditional n-tier, monolithic enterprise applications rarely operate well when deployed to cloud infrastructure, as they often make unsupportable assumptions about their deployment environment that cloud infrastructures simply cannot provide. A few examples include:
+传统的n层单体式应用部署到云中后很难维护，
 
-- Access to mounted, shared filesystems
+传统的n层，单体式企业应用程序在部署到云基础设施中后很难良好运行，因为它们经常对云基础设施无法提供的部署环境做出不可靠的假设。 例如以下要求：
 
-- Peer-to-peer application server clustering
+- 可访问已挂载的共享文件系统
+- P2P应用服务器集群
+- 共享库
+- 配置文件位于常用的配置文件目录
 
-- Shared libraries
+大多数这些假设都出于这样的事实：单体应用通常都部署在长期运行的基础设施中，并与其紧密结合。不幸的是，它们并不太合适弹性和短暂的基础设施。
 
-- Configuration files sitting in well-known locations
+但是即使我们可以构建一个不需要这些假设的单体应用，我们依然有一些问题需要解决：
 
-Most of these assumptions are coupled with the fact that monoliths are typically deployed to long-lived infrastructure. Unfortunately, they are not very compatible with the idea of elastic and ephemeral infrastructure.
+-   单体式应用的变更周期耦合，使独立业务能力无法按需部署，阻碍创新速度。
+-   嵌入到单体应用中的服务不能独立于其他服务进行扩展，因此负载更难于优化。
+-   新加入组织的开发人员必须适应新的团队，经常学习新的业务领域，并且一次就熟悉一个非常大的代码库。 这样会增加3-6个月的适应时间，才能实现真正的生产力。
+-   尝试通过堆积开发人员来扩大开发组织，增加了昂贵的沟通和协调成本。
+-   技术栈需要长期承诺。引进新技术被认为太冒险的举动，因为这可能会对整体产生不利影响。
 
-But let’s assume that we could build a monolith that does not make any of these assumptions. We still have trouble:
+细心的读者会注意到，该列表正好与“微服务”的列表相反。将组织分解为业务能力团队还要求我们将应用程序分解成微服务。只有这样，我们才能从云计算基础架构中获得最大的收益。
 
--   Monoliths couple change cycles together such that independent business capabilities cannot be deployed as required, preventing speed of innovation.
+## 分解数据
 
--   Services embedded in monoliths cannot be scaled independently of other services, so load is far more difficult to account for efficiently.
+仅仅将单体应用分解为微服务还是远远不够的。数据模型必须要解耦。如果业务能力团队被认为是自主的，却被迫通过单一的数据存储进行协作，那么单体应用对创新的阻碍将依然存在。
 
--   Developers new to the organization must acclimate to a new team, often learn a new business domain, and become familiar with an extremely large codebase all at once. This only adds to the typical 3–6 month ramp up time before achieving real productivity.
+事实上，产品架构必须从数据开始的说法是有争议的。由Eric Evans（Addison-Wesley）在领域驱动设计（DDD）中提出的原理认为，我们的成功在很大程度上取决于领域模型的质量（以及支持它的普遍存在的语言）。要使领域模型有效，还必须在内部一致——我们不应该在同一模型内的一致定义中找到重复定义的术语或概念。
 
--   Attempting to scale the development organization by adding more people further crowds the sandbox, adding expensive coordination and communication overhead.
+创建不具有这种不一致的联合领域模型是非常困难和昂贵的（可以说是不可能的）。Evans将业务的整体领域模型的内部一致性子集称为有界上下文。
 
--   Technical stacks are committed to for the long term. Introducing new technology is considered too risky, as it can adversely affect the entire monolith.
+最近与航空公司客户合作时，我们讨论了他们业务的核心概念，自然是“航空公司预订”的话题。该集团可以在其预定业务中划分十七种不同的逻辑定义，几乎不能将它们调和为一个。相反，每个定义的所有细微差别都被仔细地描绘成一个个单一的概念，这将成为组织的巨大瓶颈。
 
-The observant reader will notice that this list is the inverse of the list from “Microservices” on page 10. The decomposition of the organization into business capability teams also requires that we decompose applications into microservices. Only then can we harness the maximum benefit from our move to cloud infrastructure.
+有界上下文允许你在整个组织中保持单一概念的不一致定义，只要它们在有界上下文中一致地定义。
 
-## Decomposing Data
+因此，我们首先需要确定可以在内部保持一致的领域模型的细分。我们在这些细分上画出固定的边界，划分出有界上下文。然后，我们可以将业务能力团队与这些环境相匹配，这些团队将构建提供这些功能的微服务。
 
-It’s not enough to decompose monolithic applications into microservices. Data models must also be decoupled. If business capability teams are supposedly autonomous but are forced to collaborate via a single data store, the monolithic barrier to innovation is simply relocated.
+微服务提供了一个有用的定义，用于定义12因素应用程序应该是什么。12因素主要是技术规范，而微服务主要是业务规范。通过定义有界上下文，为他们分配一组业务能力，委托能力团队对这些业务能力负责，并建立12因素应用程序。这些应用程序可以独立部署的情况下，为业务能力团队的运维提供了一组有用的技术工具。
 
-In fact, it’s arguable that product architecture must start with the data. The principles found in Domain-Driven Design (DDD), by EricEvans (Addison-Wesley), argue that our success is largely governed by the quality of our domain model (and the ubiquitous language that underpins it). For a domain model to be effective, it must also be internally consistent—we should not find terms or concepts withinconsistent definitions within the same model.
+我们将有界上下文与每个服务模式的数据库结合，每个微服务封装、管理和保护自己的领域模型和持久存储。在每个服务模式的数据库中，只允许一个应用程序服务访问逻辑数据存储，逻辑数据存储可能是以多租户集群中的单个schema或专用物理数据库中存在。对这些概念的任何外部访问都是通过一个明确定义的业务协议来实现的，该协议的实现方式为API（通常是REST，但可能是任何协议）。
 
-It is incredibly difficult and costly (and arguably impossible) to create a federated domain model that does not suffer from such inconsistencies. Evans refers to internally consistent subsets of the overall domain model of the business as bounded contexts.
+这种分解允许应用拥有多语言支持的持久性，或者基于数据形态和读写访问模式选择不同的数据存储。然而，数据必须经常通过事件驱动技术重新组合，以便请求交叉上下文。诸如命令查询责任隔离（CQRS）和事件源（Event Sourcing）之类的技术通常在跨上下文同步类似概念时很有帮助，这超出了本文的范围。
 
-When working with an airline customer recently, we were discus‐sing the concepts most central to their business. Naturally the topicof “airline reservation” came up. The group could count seventeen different logical definitions of reservation within its business, with little to no hope of reconciling them into one. Instead, all of the nuance of each definition was carefully baked into a single concept, which became a huge bottleneck for the organization.
+## 容器化
 
-Bounded contexts allow you to keep inconsistent definitions of a single concept across the organization, as long as they are defined consistently within the contexts themselves.
+容器镜像（例如通过LXC、Docker或Rocket项目准备的镜像）正在迅速成为云原生应用程序架构的部署单元。然后通过诸如Kubernetes、Marathon或Lattice等各种调度解决方案实例化这样的容器镜像。亚马逊和Google等公有云供应商也提供一流的解决方案，用于容器化调度和部署。容器利用现代的Linux内核原语，如控制组（cgroups）和命名空间来提供类似的资源分配和隔离功能，这些功能与虚拟机提供的功能相比，具有更少的开销和更强的可移植性。应用程序开发人员将需要将应用程序包装成容器镜像，以充分利用现代云基础架构的功能。
 
-  So we begin by identifying the segments of the domain model that can be made internally consistent. We draw fixed boundaries around these segments, which become our bounded contexts. We’re then able to align business capability teams with these contexts, and those teams build microservices providing those capabilities.
+## 从管弦乐编排到舞蹈编舞
 
-  This definition of microservice provides a useful rubric for definingwhat your twelve-factor apps ought to be. Twelve-factor is primarily a technical specification, whereas microservices are primarily a business specification. We define our bounded contexts, assign them a set of business capabilities, commission capability teams to own those business capabilities, and have them build twelve-factor applications. The fact that these applications are independently deployable provides business capability teams with a useful set of technical tools for operation.
+不仅仅服务交付、数据建模和治理必须分散化，服务集成也是如此。企业服务集成传统上是通过企业服务总线（ESB）实现的。 ESB成为管理服务之间交互的所有路由、转换、策略、安全性和其他决策的所有者。我们将其称之为编排，类似于导演，他决定了乐团演出期间演奏音乐的进程。ESB和编排可以产生非常简单和令人愉快的架构图，但它们的简单性紧紧是表面性的。在ESB中隐藏的是复杂的网络。管理这种复杂性成为全职职业，从事这个工作成为应用开发团队的持续瓶颈。正如我们在联合数据模型所看到的，像ESB这样的联合集成解决方案成为阻碍幅度的巨大难题。
 
-  We couple bounded contexts with the database per service pattern,where each microservice encapsulates, governs, and protects its own domain model and persistent store. In the database per service pat‐tern, only one application service is allowed to gain access to a logical data store, which could exist as a single schema within a multi‐tenant cluster or a dedicated physical database. Any external access to the concepts is made through a well-defined business contract implemented as an API (often REST but potentially any protocol).
+诸如微服务这样的云原生架构更倾向于喜欢舞蹈，它们类似于芭蕾舞中的舞者。它们将心智放置在端点上，类似于Unix架构中的虚拟管道和智能过滤器，而不是放在集成机制中。当舞台上的情况与原来的计划有所不同时，没有导演告诉舞者该怎么做。相反，他们只是适应。同样，服务通过客户端负载均衡和断路器等模式，适应环境中不断变化的各种情况。
 
-This decomposition allows for the application of polyglot persis‐tence, or choosing different data stores based on data shape andread/write access patterns. However, data must often be recomposedvia event-driven techniques in order to ask cross-context questions.Techniques such as command query responsibility segregation(CQRS) and event sourcing, beyond the scope of this report, areoften helpful when synchronizing similar concepts across contexts.
-
-## Containerization
-
-Container images, such as those prepared via the LXC, Docker, orRocket projects, are rapidly becoming the unit of deployment for cloud-native application architectures. Such container images are then instantiated by various scheduling solutions such as Kubernetes, Marathon, or Lattice. Public cloud providers such as Amazon and Google also provide first-class solutions for container scheduling and deployment. Containers leverage modern Linux kernel primitives such as control groups (cgroups) and namespaces to pro‐vide similar resource allocation and isolation features as those provided by virtual machines with much less overhead and muchgreater portability. Application developers will need to become comfortable packaging applications as container images to take full advantage of the features of modern cloud infrastructure.
-
-## From Orchestration to Choreography
-
-Not only must service delivery, data modeling, and governance be decentralized, but also service integration. Enterprise integration ofservices has traditionally been accomplished via the enterprise ser‐vice bus (ESB). The ESB becomes the owner of all routing, transformation, policy, security, and other decisions governing the interaction between services. We call this orchestration, analogous to theconductor who determines the course of the music performed by anorchestra during its performance. ESBs and orchestration make forvery simple and pleasing architecture diagrams, but their simplicityis deceiving. Often hiding within the ESB is a tangled web of com‐plexity. Managing this complexity becomes a full-time occupation,and working with it becomes a continual bottleneck for the applica‐tion development team. Just as we saw with a federated data model,a federated integration solution like the ESB becomes a monolithichazard to speed.
-
-Cloud-native architectures, such as microservices, tend to prefer choreography, akin to dancers in a ballet. Rather than placing the smarts in the integration mechanism, they are placed in the end‐points, akin to the dumb pipes and smart filters of the Unix architecture. When circumstances on stage differ from the original plan, there’s no conductor present to tell the dancers what to do. Instead, they simply adapt. In the same way, services adapt to changing circumstances in their environment via patterns such as client-side load balancing (“Routing and Load Balancing” on page 39) and circuit breakers (“Fault-Tolerance” on page 42).
-
-While the architecture diagrams tend to look like a tangled web, their complexity is no greater than a traditional SOA. Choreography simply acknowledges and exposes the essential complexity of the system. Once again this shift is in support of the autonomy required to enable the speed sought from cloud-native architectures. Teams are able to adapt to their changing circumstances without the difficult overhead of coordinating with other teams, and avoid the over‐head of coordinating changes with a centrally-managed ESB.
+虽然架构图看起来像一个缠杂的网络，但它们的复杂性并不比传统的SOA大。编排简单地承认并暴露了系统的原有的复杂性。再次，这种转变是为了支持从云原生架构中寻求速度所需的自治。团队能够适应不断变化的环境，而无需承担与其他团队协调的开销，并避免了在集中管理的ESB中协调变更所造成的开销。
