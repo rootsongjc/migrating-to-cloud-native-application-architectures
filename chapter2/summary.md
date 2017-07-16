@@ -1,47 +1,47 @@
-# Summary
+# 本章小结
 
-In this chapter we’ve examined a few of the changes that most enter‐prises will need to make in order to adopt cloud-native applicationarchitectures. Culturally the overall theme is one of decentralizationand autonomy:
+本章中，我们探讨了大多数企业采用云原生应用架构所需要做出的变革。从宏观总体上看是权力下放和自治：
 
 **DevOps**
 
-Decentralization of skill sets into cross-functional teams.
+技能集中化转变为跨职能团队。
 
-**Continuous delivery**
+**持续交付**
 
-Decentralization of the release schedule and process.
+发行时间表和流程的权力下放。
 
-**Autonomy**
+**自治**
 
-Decentralization of decision making.
+决策权力下放。
 
-We codify this decentralization into two primary team structures:
+我们将这种权力下放编成两个主要的团队结构：
 
-**Business capability teams**
+**业务能力团队**
 
-Cross-functional teams that make their own decisions aboutdesign, process, and release schedule.
+自主决定设计、流程和发布时间表的跨职能团队。
 
-**Platform operations teams**
+**平台运营团队**
 
-Teams that provide the cross-functional teams with the plat‐form they need to operate.
+为跨职能团队提供他们所需要运行平台。
 
-And technically, we also decentralize control:
+而在技术上，我们也分散自治：
 
-**Monoliths to microservices**
+**单体应用到微服务**
 
-Control of individual business capabilities is distributed to individual autonomous services.
+将个人业务能力的控制分配给单个自主服务。
 
-**Bounded contexts**
+**有界上下文**
 
-Control of internally consistent subsets of the business domain model is distributed to microservices.
+将业务领域模型的内部一致子集的控制分配到微服务。
 
-**Containerization**
+**容器化**
 
-Control of application packaging is distributed to business capability teams.
+将对应用程序包装的控制分配给业务能力团队。
 
-**Choreography**
+**编排**
 
-Control of service integration is distributed to the service end‐points.
+将服务集成控制分配给服务端点。
 
-All of these changes create autonomous units that are able to safelymove at the desired rate of innovation.
+所有这些变化造就了无数的自治单元，辅助我们以期望的创新速度安全前行。
 
-In the final chapter, we’ll delve into technical specifics of migrating to cloud-native application architectures through a set of cookbook-style recipes.
+在最后一章中，我们将通过一组操作手册，深入研究迁移到云原生应用程序架构的技术细节。
