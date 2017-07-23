@@ -1,73 +1,73 @@
-# Decomposition Recipes
+# 分解方法
 
-After discussing the decomposition of data, services, and teams with customers, I’m often asked, “Great! How do we get there from here?” Good question. How do we tear apart existing monoliths and move them to the cloud?
+在和客户讨论分解数据、服务和团队后，客户经常向我提出这样的问题，“太棒了！但是我们要怎样实现呢？”这是个好问题。如何拆分已有的单体应用并把他们迁移上云呢？
 
-As it turns out, I’ve seen companies succeed with a fairly repeatable pattern of incremental migration which I now recommend to all of my customers. Publicly reference able examples of this pattern can be found at SoundCloud and Karma.
+事实证明，我已经看到了很多成功的例子，使用增量迁移这种相当可复制的模式，我现在向我所有的客户推荐这种模式。SoundCloud和Karma就是公开的例子。
 
-In this section we’ll walk step-by-step through a series of recipes that provide a process for decomposing monolithic services and moving them to the cloud.
+本节中，我们将讲解如何一步步地将单体服务分解并将它们迁移到云上。
 
-## New Features as Microservices
+## 新特性即微服务
 
-Surprisingly, the first step is not to start chipping away at the monolith itself. We’ll begin with the assumption that you still have a back‐log of features to be built within the monolith. In fact, if you don’thave any net new functionality to build, it’s arguable that youshouldn’t even be considering this decomposition. (Given that our primary motivation is speed, how do you leave something unchanged really fast?)
+你可能感到很惊奇，第一步不是分解单体应用。我们将设你依然要在单体应用中构建服务。 事实上，如果你没有任何新的功能来构建，那么你甚至不应该考虑这个分解。（鉴于我们的主要动机是速度，你如何保持不变还能获取速度呢？）
 
-...the team decided that the best approach to deal with the architec‐ture changes would not be to split the Mothership immediately, butrather to not add anything new to it. All of our new features werebuilt as microservices...
-
-—Phil Calcado, SoundCloud
-
-So it’s time to stop adding new code to the monolith. All new fea‐tures will be built as microservices. Get good at this first, as buildingnew services from scratch is far easier than surgically extractingthem from a big ball of mud.
-
-Inevitably, however, these new microservices will need to talk backto the monolith in order to get anything done. How do we attackthat problem?
-
-## The Anti-Corruption Layer
-
-Because so much of our logic was still in the Rails monolith, pretty much all of our microservices had to talk to it somehow.
+...团队决定，处理架构变化的最佳方法不是立即分解Mothership架构，而是不添加任何新的东西。我们所有的新功能以微服务形式构建..
 
 —Phil Calcado, SoundCloud
 
-Domain-Driven Design (DDD), by Eric Evans (Addison-Wesley),discusses the idea of an anti-corruption layer. Its purpose is to allow the integration of two systems without allowing the domain model of one system to corrupt the domain model of the other. As you build new functionality into microservices, you don’t want these new services to become tightly coupled with the monolith by giving them deep knowledge of the monolith’s internals. The anti-corruption layer is a way of creating API contracts that make the monolith look like other microservices.
+所以不要再向单一应用中增加代码，将素有的新功能以微服务的形式构建。这是第一步就要考虑好的，因为从头开始构架一个服务比分解一个单体应用并提出服务出来容易和快速的多。
 
-Evans divides the implementation of anti-corruption layers intothree submodules, the first two representing classic design patterns
+然而有一点不可避免，就是新构建的微服务需要与已有的单体应用通信才能完成工作，这个问题怎么解决？
 
-(from Gamma et al., Design Patterns: Elements of Reusable Object-Oriented So ware [Addison Wesley]):
+## 隔离层
 
-**Facade**
+*因为我们大部分的业务逻辑都是基于Rails的单体应用，所以我们的微服务基本也要跟它们通信。*
 
-The purpose of the facade module here is to simplify the pro‐cess of integrating with the monolith’s interface. It’s very likelythat the monolith was not designed with this type of integrationin mind, so the facade’s purpose is to solve this problem. Importantly, it does not change the monolith’s model, being careful not to couple translation and integration concerns.
+——Phil Calcado, SoundCloud
 
-**Adapter**
+Eric Evans（Addison-Wesley）的领域驱动设计（DDD）讨论了隔离层的思想。 其目的是允许两个系统的集成，而不允许一个系统的领域模型破坏另一个系统的领域模型。 当您将新功能集成到微服务中时，不希望这些新服务与整体的紧密结合，让他们深入了解整体的内部结构。 隔离层是创建API协议的一种方式，使得整体架构看起来像其他微服务。
 
-The adapter is where we define “services” that provide things our new features need. It knows how to take a request from our system, using a protocol that it understands, and make that request to the monolith’s facade(s).
+Evans将隔离层的实施划分为三个子模块，前两个代表着经典设计模式
 
-**Translator**
+（来自Gamma等人，Design Patterns：Elements of Reusable Object-Oriented So ware [Addison Wesley]）：
 
-The translator’s responsibility is to convert requests and responses between the domain model of the monolith and the domain model of the new microservice.
+**表现层**
 
-These three loosely coupled components solve three problems:
+表现层的目的是为了简化与单体应用接口集成的过程。单体应用设计之初很可能没有考虑这个集成，因此我们引入了表现层来解决这个问题。它没有改变单体应用的模型，这很重要，注意不要将转换和集成问题耦合到一起。
 
-1. System integration
-2. Protocol translation
-3. Model translation
+**适配器**
 
-What remains is the location of the communication link. In DDD,Evans discusses two alternatives. The first, facade to system, is primarily useful when you can’t access or alter the legacy system. Our focus here is on monoliths we do control, so we’ll lean toward Evans’ second suggestion, adapter to facade. Using this alternative, we build the facade into the monolith, allowing communications to occur between the adapter and the facade, as presumably it’s easier to create this link between two things written explicitly for this purpose.
+我们用适配器来定义service，用来提供我们需要的新功能。它知道如何获取系统请求并使用协议将请求发送给单体应用的表层。
 
-Finally, it’s important to note that anti-corruption layers can facili‐tate two-way communication. Just as our new microservices mayneed to communicate with the monolith to accomplish work, theinverse may be true as well, particularly as we move on to our nextphase.
+**转换器**
 
-## Strangling the Monolith
+转换器的职责是在单体应用与新的微服务之间进行请求和响应的领域模型转换。
 
-After the architecture changes were made, our teams were free to build their new features and enhancements in a much more flexible environment. An important question remained, though: how do we extract the features from the monolithic Rails application calledMothership?
+这三个松耦合的组件解决了以下三个问题：
 
-—Phil Calcado, SoundCloud
+1. 系统集成
+2. 协议转换
+3. 模型转换
 
-I borrow the idea of “strangling the monolith” from Martin Fowler’s article entitled “StranglerApplication”. In this article, Fowler explains the idea of gradually creating “a new system around the edges of the old, letting it grow slowly over several years until the old system is strangled.” We’re effectively going to do the same thing here. Through a combination of extracted microservices and additional anti-corruption layers, we’ll build a new cloud-native system around the edges of the existing monolith.
+剩下的是通信链路的位置。在DDD中，Evans讨论了两种选择。当您无法访问或更改遗留系统时，第一，将系统的表现层设置为主要功能。我们的重点在于我们控制的整体，所以我们将倾向于Evans的第二个建议，适配器到表现层。使用这种替代方法，我们将表现层构筑到单体中，允许在适配器和表现层之间进行通信，因为在为此专门构建的组件之间创建连接更容易。
 
-Two criteria help us choose which components to extract:
+最后，要注意隔离层可以促进双向通信。 正如我们新的微服务可能需要与整体进行通信以完成工作一样，反之亦然，特别是当我们进入下一阶段时。
 
-1. SoundCloud nails the first criterion: identify bounded contexts within the monolith. If you’ll recall our earlier discussions of bounded contexts, they require a domain model that is internally consistent. It’s extremely likely that our monolith’s domain model is not internally consistent. Now it’s time to start identifying submodels that can be. These are our candidates for extraction.
-2. Our second criterion deals with priority: which of our candidates do we extract first? We can answer this by reviewing our first reason for moving to cloud-native architecture: speed of innovation. What candidate microservices will benefit most from speed of innovation? We obviously want to choose those that are changing the most given our current business needs.Look at the monolith’s backlog. Identify the areas of the monolith’s code that will need to change in order to deliver the changed requirements, and then extract the appropriate bounded contexts before making the desired changes.
+## 扼杀单体应用
 
-## Potential End States
+*在架构调整后，我们的团队可以在更加灵活的环境中自由构建新功能和增强功能。 然而，一个重要的问题仍然存在：我们如何从名为Mothership的单体Rails应用程序中提取功能？*
 
-How do we know when we are finished? There are basically two end states:
+——Pilil Calcado，SoundCloud
 
-1. The monolith has been completely strangled to death. All bounded contexts have been extracted into microservices. The final step is to identify opportunities to eliminate anti-corruption layers that are no longer necessary.
-2. The monolith has been strangled to a point where the cost of additional service extraction exceeds the return on the necessary development efforts. Some portions of the monolith maybe fairly stable—we haven’t changed them in years and they’re doing their jobs. There may not be much value in moving these portions around, and the cost of maintaining the necessary anti-corruption layers to integrate with them may be low enough that we can take it on long-term.
+我从Martin Fowler的题为“扼杀应用”的文章中借用了“扼杀巨石”的想法。 在这篇文章中，Fowler解释了逐渐创造“围绕旧系统边缘的新系统，让它几年来慢慢增长，直到旧系统被扼杀”的想法。这种情况同样适用于我们。通过提取的微服务和其他隔离层的组合，我们将围绕现有单体的边缘构建一个新的云原生系统。
+
+两个标准帮助我们选择要提取哪些组件：
+
+1. SoundCloud指出了第一个标准：识别单体中的有界上下文。如果你回想起我们之前讨论有限上下文，它需要一个内部一致的领域模型。我们的单体领域模型极有可能不是内部一致的。现在是开始识别子模型的时候了，里面有我们要提取的候选者。
+2. 第二个标准是优先考虑的：在众多的候选者中我们应该首先提取哪一个呢？我们可以回顾一下迁移到云原生架构的第一个原因：创新速度。什么候选微服务将最受益于创新速度？我们显然希望选择那些正在改变我们当前业务需求的服务。看看单体应用的积压。确定需要更改的代码的区域，以便提交更改的要求，然后在进行所需更改之前提取适当的有界上下文。
+
+## 潜在的结束状态
+
+我们怎么知道何时结束？下面有两个基本的结束状态：
+
+1. 单体架构已经被完全扼杀。所有的有界上下文都被提取为微服务。最后一步是确定消除不再需要隔离层的机会。
+2. 单体架构被扼杀到了这样一个点：额外服务提取的成本超过必要开发努力的回报。 单体的一些部分可能相当稳定——它们几年来都没有改变，还是一直都在运行得好好的。迁移这些部分可能没有太大的价值，维持必要的隔离层与其集成的成本足够低，我们可以长期负担。

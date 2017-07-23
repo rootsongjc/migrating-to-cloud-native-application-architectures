@@ -1,3 +1,3 @@
-# Migration Cookbook
+# 迁移指南
 
-Now that we’ve defined cloud-native application architectures and given a brief high-level overview of the changes enterprises must consider when adopting them, it’s time to delve into technical specifics. Each of these topics minimally merits its own chapter, and that’s beyond the scope of this report. Instead, this chapter provides a set of short, cookbook-style recipes to help with specific tasks and patterns needed to adopt a cloud-native application architecture, along with links to helpful further reading.
+现在我们已经定义了云原生应用程序架构，并简要介绍了企业在采用它们时必须考虑做出的变化，现在是深入研究技术细节的时候了。对每个技术细节的深入讲解已经处处了本报告的范围。本章中仅是对采用云原生应用程序架构后，需要做的特定工作和采用的模式的一系列简短的介绍，文中还给出了一些进一步深入了解这些方法的链接。
