@@ -1,23 +1,23 @@
-# Summary
+# 本章小结
 
-In this chapter we walked through two sets of recipes that can helpus move toward a cloud-native application architecture:
+本章中我们讨论了两种帮助我们迁移到云原生应用架构的方法：
 
-**Decomposition**
+**分解原架构**
 
-We break down monolithic applications by:
+我们使用以下方式分解单体应用：
 
-1. Building all new features as microservices.
-2. Integrating new microservices with the monolith via anti-corruption layers.
-3. Strangling the monolith by identifying bounded contextsand extracting services.
+1. 所有新功能都使用微服务形式构建。
+2. 通过隔离层将微服务与单体应用集成。
+3. 通过定义有界上下文来分解服务，逐步扼杀单体架构。
 
-**Distributed systems**
+**使用分布式系统**
 
-We compose distributed systems by:
+分布式系统由以下部分组成：
 
-1. Versioning, distributing, and refreshing configuration via a configuration server and management bus.
-2. Dynamically discovering remote dependencies.
-3. Decentralizing load balancing decisions.
-4. Preventing cascading failures through circuit breakers and bulkheads.
-5. Integrating on the behalf of specific clients via API Gate‐ways.
+1. 版本化，分布式，通过配置服务器和管理总线刷新配置。
+2. 动态发现远端依赖。
+3. 去中心化的负载均衡策略
+4. 通过熔断器和隔板阻止级联故障
+5. 通过 API 网关集成到特定的客户端上
 
-Many additional helpful patterns exist, including those for automated testing and the construction of continuous delivery pipelines.For more information, the reader is invited to read “Testing Strategies in a Microservice Architecture” by Toby Clemson and Continuous Delivery: Reliable So ware Releases through Build, Test, andDeployment Automation by Jez Humble and David Farley (Addison-Wesley).
+还有很多其他的模式，包括自动化测试、持续构建与发布管道等。欲了解更多信息，请阅读 Toby Clemson 的 《 Testing Strategies in a Microservice Architecture》，以及 Jez Humbl 和 David Farley（AddisonWesley）的《Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation》。

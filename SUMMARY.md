@@ -11,8 +11,8 @@
   - [2.3 技术变革](chapter2/technical-change.md)
   - [2.4 本章小结](chapter2/summary.md)
 - [3. 迁移指南](chapter3/migration-cookbook.md)
-  - [3.1 分解方法](chapter3/decomposition-recipes.md)
-  - [3.2 分布式系统方法](chapter3/distributed-systems-recipes.md)
+  - [3.1 分解原架构](chapter3/decomposition-recipes.md)
+  - [3.2 使用分布式系统](chapter3/distributed-systems-recipes.md)
   - [3.3 本章小结](chapter3/summary.md)
 
 

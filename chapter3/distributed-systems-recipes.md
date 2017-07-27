@@ -1,230 +1,212 @@
-# Distributed Systems Recipes
+# 使用分布式系统
 
-As we start to build distributed systems composed from microservices, we’ll also encounter nonfunctional requirements that we don’t normally encounter when developing a monolith. Sometimes the laws of physics get in the way of solving these problems, such as consistency, latency, and network partitions. However, the problems of brittleness and manageability can normally be addressed through the proper application of fairly generic, boilerplate patterns. In thissection we’ll examine recipes that help us with these concerns.
+当我们开始构建由微服务组成的分布式系统时，我们还会遇到在开发单体应用时通常不会遇到的非功能性要求。 有时，使用物理定律就可以解决这些问题，例如一致性、延迟和网络分区问题。然而，脆弱性和易控性的问题通常可以使用相当通用的模式来解决。在本节中，我们将介绍帮助我们解决这些问题的方法。
 
-These recipes are drawn from a combination of the Spring Cloud project and the Netflix OSS family of projects.
+这些方法来自于Spring Cloud项目和Netflix OSS系列项目的组合。
 
-## Versioned and Distributed Confguration
+## 版本化和分布式配置
 
-We discussed the importance of proper configuration management for applications in “Twelve-Factor Applications” on page 7, which specifies the injection of configuration via operating system-level environment variables. This method is very suitable for simple systems, but as we scale up to larger systems, sometimes we want additional configuration capabilities:
+在“12因素应用“中我们讨论过通过操作系统级环境变量为应用注入对应的配置，这种配置管理方式的重要性。这种方式特别适合简单的系统，但是，当系统扩大后，有时我们还需要附加的配置能力：
 
-- Changing logging levels of a running application in order todebug a production issue
+- 为debug一个生产上的问题而变更运行的应用程序日志级别
+- 更改message broker中接收消息的线程数
+- 报告所有对生产系统配置所做的更改以支持审计监管
+- 运行中的应用切换功能开关
+- 保护配置中的机密信息（如密码）
 
-- Change the number of threads receiving messages from a mes‐sage broker
+为了支持这些特性，我们需要配置具有以下特性的配置管理方法：
 
-- Report all configuration changes made to a production systemto support regulatory audits
+- 版本控制
+- 可审计
+- 加密
+- 在线刷新
 
-- Toggle features on/off in a running application
-
-- Protect secrets (such as passwords) embedded in configuration
-
-In order to support these capabilities, we need a configuration management approach with the following features:
-
-
-- Versioning
-
-- Auditability
-
-- Encryption
-
-- Refresh without restart
-
-The Spring Cloud project contains a Config Server that provides these features. This Config Server presents application and application profile (e.g., sets of configuration that can be toggled on/off as a set, such as a “development” or “staging” profile) configuration as aREST API backed by a Git repository (Figure 3-1).
+Spring Cloud 项目中包含的一个可提供这些功能的配置服务器。此配置服务器通过 Git 本地仓库(Repository)支持的 REST API 呈现了应用程序及应用程序配置文件(例如，可用开/关切换的一组配置作为一组，如“deployment”和“staging”配置)(图 3 -1)。
 
 ![Spring Cloud Config Server](../images/figure-3-1.jpg)
 
-  Figure 3-1.  The Spring Cloud Config Server
-
-  As an example, here’s the default application profile configuration for a sample Config Server (Example 3-1).
-
-  Example 3-1. Default application pro le con guration for a sampleCon g Server
+例3-1是示例配置服务器的默认配置文件：
 
 ![Example 3-1](../images/example-3-1.jpg)
 
-1. This configuration is backed by the file application.yml in thespecified backing Git repository.
-2. The greeting is currently set to ohai.
+1. 该配置中指定了后端Git仓库中的`application.yml`文件。
 
-  The configuration in Example 3-1 was not manually coded, but gen‐erated automatically. We can see that the value for greeting is beingdistributed to the Spring application by examining its /env endpoint(Example 3-2).
+2. greeting当前被设置为ohai。
+
+  例3-1中的配置是自动生成的，无需手动编码。我们可以看到，通过检查它的/env端点（例3-2），greeting的值被分发到Spring应用中。
 
 ![Example 3-2](../images/example-3-2.jpg)
 
-1. This application is receiving its greeting value of ohai from theConfig Server.
 
-All that remains is for us to be able to update the value of greeting without restarting the client application. This capability is provided by another Spring Cloud project module called Spring Cloud Bus.This project links nodes of a distributed system with a lightweight message broker, which can then be used to broadcast state changes such as our desired configuration change (Figure 3-2).
+1. 该应用接收到来自配置服务器的greeting的值：ohai。
 
-Simply by performing an HTTP POST to the /bus/refresh end‐point of any application participating in the bus (which should obviously be guarded with appropriate security), we can instruct all applications on the bus to refresh their configuration with the latest available values from the Config Server.
+现在我们就可以无需重启客户端应用就可以更新greeting的值。该功能由Spring Cloud项目中的一个名为Spring Cloud Bus的组件提供。该项目将分布式系统的节点与轻量级消息代理进行链接，然后可以用于广播状态更改，如我们所需的配置更改（图3-2）。该项目将分布式系统的节点与轻量级消息代理进行链接，然后可以用于广播状态更改，如我们所需的配置更改（图3-2）。
 
- ![Figure 3-2](../images/figure-3-2.jpg)
+只需通过对参与总线的任何应用程序的/bus/refresh端点执行HTTP POST（这显然应该进行适当的安全性保护），指示总线上的所有应用程序使用配置服务器中的最新的可用值刷新其配置。![Figure 3-2](../images/figure-3-2.jpg)
 
-## Service Registration/Discovery
+## 服务注册发现
 
-As we create distributed systems, our code’s dependencies cease to be a method call away. Instead, we must make network calls in orderto consume them. How do we perform the necessary wiring to allow all of the microservices within a composed system to communicate with one another?
+当我们创建分布式系统时，代码的依赖不再是一个方法调用。相反，消费它们必须通过网络调用。我们该如何布线，才能使组合系统中的所有微服务彼此通信？
 
-A common architecture pattern in the cloud (Figure 3-3) is to have frontend (application) and backend (business) services. Backend services are often not accessible directly from the Internet but are rather accessed via the frontend services. The service registry pro‐vides a listing of all services and makes them available to frontend services through a client library (“Routing and Load Balancing” on page 39) which performs load balancing and routing to backend services.
+云中的（图3-3）的同样架构模式是有一个前端（应用程序）和后端（业务）服务。后端 服务往往不能直接从互联网访问，而是通过前端服务访问。服务注册提供的所有服务的列表， 使他们可以通过一个客户端库到达前端服务(路由和负载均衡)，客户端库执行负载均衡和路由到后端服务。
 
 ![Figure 3-3](../images/figure-3-3.jpg)
 
- We’ve solved this problem before using various incarnations of theService Locator and Dependency Injection patterns, and service-oriented architectures have long employed various forms of service registries. We’ll employ a similar solution here by leveraging Eureka, which is a Netflix OSS project that can be used for locating services for the purpose of load balancing and failover of middle-tier services. Consumption of Eureka is further simplified for Spring applications via the Spring Cloud Netflix project, which provides a primarily annotation-based configuration model for consuming NetflixOSS services.
+在使用服务定位器和依赖注入模式的各种形式之前，我们已经解决了这个问题，面向服务的架构长期以来一直使用各种形式的服务注册表。我们将采用类似的解决方案，利用Eureka，这是一个Netflix OSS项目，可用于定位服务，以实现中间层服务的负载平衡和故障转移。为了使用Netflix OSS服务，Spring Cloud Netflix项目提供了基于注释的配置模型，这大大简化了开发人员在开发Spring应用程序时对Eureka的心力耗费。
 
-An application leveraging Spring Boot can participate in service registration and discovery simply by adding the @EnableDiscoveryClient annotation (Example 3-3).
+在例3-3中，只需简单得在代码中添加@EnableDiscoveryClient注释，应用程序就可以进行服务注册和发现。
 
 ![Example 3-3](../images/example-3-3.jpg)
 
-1.  The @EnableDiscoveryClient enables service registration/discovery for this application.
+1.  @EnableDiscoveryClient开启应用程序的服务注册发现。
 
 
-The application is then able to communicate with its dependencies by leveraging the DiscoveryClient. In Example 3-4, the application looks up an instance of a service registered with the name PRODUCER, obtains its URL, and then leverages Spring’s RestTemplate to communicate with it.
+该应用程序就能够通过利用 DiscoveryClient 与它的依赖组件通信。例3-4是应用 程序查找名为 PRODUCER 的注册服务的一个实例，获得其 URL，然后利用 Spring 的 RestTemplate 与之通信。
 
- ![example-3-4](../images/example-3-4.jpg)
+![example-3-4](../images/example-3-4.jpg)
 
-1. The enabled DiscoveryClient is injected by Spring.
-2. The getNextServerFromEureka method provides the location of a service instance using a round-robin algorithm.
+1. 开启的DiscoveryClient通过Spring注入。
+2. getNextServerFromEureka方法使用round-robin算法提供服务实例的位置。
 
-## Routing and Load Balancing
+## 路由和负载均衡
 
-Basic round-robin load balancing is effective for many scenarios, but distributed systems in cloud environments often demand amore advanced set of routing and load balancing behaviors. These are commonly provided by various external, centralized load balancing solutions. However, it’s often true that such solutions do notpossess enough information or context to make the best choices fora given application as it attempts to communicate with its depen‐dencies. Also, should such external solutions fail, these failures cancascade across the entire architecture.
+基本的round-robin负载平衡在许多情况下是有效的，但云环境中的分布式系统通常需要更高级的路由和负载均衡行为。这些通常由各种外部集中式负载均衡解决方案提供。然而，这种解决方案通常不具有足够的信息或上下文，以便在给定的应用程序尝试与其依赖进行通信时做出最佳选择。此外，如果这种外部解决方案故障，这些故障可以跨越整个架构。
 
-Cloud-native solutions often often shift the responsibility for making routing and load balancing solutions to the client. One such client-side solution is the Ribbon Netflix OSS project (Figure 3-4).
+云原生的解决方案通常将路由和负载均衡的职责放在客户端。Ribbon Netflix OSS项目就是其中的一种。（图3-4）
 
 ![Figure 3-4](../images/figure-3-4.jpg)
 
-Ribbon provides a rich set of features including:
+Ribbon提供一组丰富的功能集：
 
--   Multiple built-in load balancing rules:
+- 多种内建的负载均衡规则：
+  - Round-robin 轮询负载均衡
+  - 平均加权响应时间负载均衡
+  - 随机负载均衡
+  - 可用性过滤负载均衡（避免跳闸线路和高并发链接数）
+  - 自定义负载均衡插件系统
 
-    - Round-robin
-    - Average response-time weighted
-    - Random
-    - Availability filtered (avoid tripped circuits or high concurrent connection counts)
+- 与服务发现解决方案的可拔插集成（包括Eureka）
+- 云原生智能，例如可用区亲和性和不健康区规避
+- 内建的故障恢复能力
 
--   Custom load balancing rule plugin system
-
--   Pluggable integration with service discovery solutions (including Eureka)
-
--   Cloud-native intelligence such as zone affinity and unhealthy zone avoidance
-
--   Built-in failure resiliency
-
-As with Eureka, the Spring Cloud Netflix project greatly simplifies aSpring application developer’s consumption of Ribbon. Rather than injecting an instance of DiscoveryClient (for direct consumption of Eureka), developers can inject an instance of LoadBalancerClient, and then use that to resolve an instance of the application’s dependencies (Example 3-5).
+跟Eureka一样，Spring Cloud Netflix项目也大大简化了Spring应用程序开发人员使用Ribbon的心力耗费。开发人员可以注入一个LoadBalancerClient的实例，然后使用它来解析应用程序依赖关系的一个实例（例3-5），而不是注入DiscoveryClient的实例（用于直接从Eureka中消费）。
 
 ![Example 3-5-1](../images/example-3-5-1.jpg)
 
 ![Example-3-5-2](../images/example-3-5-2.jpg)
 
-1. The enabled LoadBalancerClient is injected by Spring.
-2. The choose method provides the location of a service instance using the currently enabled load balancing algorithm.
+1. 由Spring注入的LoadBalancerClient。
+2. choose方法使用当前负载均衡算法提供了服务的一个示例地址。
 
-Spring Cloud Netflix further simplifies the consumption of Ribbon by creating a Ribbon-enabled RestTemplate bean which can be injected into beans. This instance of RestTemplate is configured toautomatically resolve instances of logical service names to instanceURIs using Ribbon (Example 3-6).
+Spring Cloud Netflix 通过创建可以注入到 Bean 中的 Ribbon-enabled 的RestTemplate bean 来进一步简化 Ribbon 的配置。RestTemplate 的这个实例被配置为使用Ribbon（示例3-6）自动将实例的逻辑服务名称解析为 instanceURI。
 
 ![Example 3-6](../images/example-3-6.jpg)
 
-1. RestTemplate is injected rather than a LoadBalancerClient.
-2. The injected RestTemplate automatically resolves http://producer to an actual service instance URI.
+1. 注入的是RestTemplate而不是LoadBalancerClient。
+2. 注入的RestTemplate自动将 http://producer 解析为实际的服务实例的URI。
 
-## Fault-Tolerance
+## 容错
 
-Distributed systems have more potential failure modes than monoliths. As each incoming request must now potentially touch tens (or even hundreds) of different microservices, some failure in one or more of those dependencies is virtually guaranteed.
+分布式系统比起单体架构来说有更多潜在的故障模式。由于传入系统中的每一个请求都可能触及几十甚至上百个不同的微服务，因此这些依赖中的某些故障实质上是不可避免的。
 
-  Without taking steps to ensure fault tolerance, 30 dependencieseach with 99.99% uptime would result in 2+ hours downtime/month (99.99%^30^ = 99.7% uptime = 2+ hours in a month).
+如果不进行容错，30个依赖，每个都是99.99%的正常运行时间，将导致2个小时的停机时间（99.99%^30=99.7%的正常运行时间=2小时以上的停机时间）。
 
-  —Ben Christensen,Netflix Engineer
+——Ben Christensen，Netflix工程师
 
-How do we prevent such failures from resulting in the type of cascading failures that would give us such negative availability numbers? Mike Nygard documented several patterns that can help in his book Release It! (Pragmatic Programmers), including:
+如何避免这类故障导致级联故障，给我们的系统可用性数据带来负面影响？Mike Nygard在他的Pragmatic Programmers中提出了几个可以觉得该问题的几个模式，包括：
 
-**Circuit breakers**
+**熔断器**
 
-Circuit breakers insulate a service from its dependencies by preventing remote calls when a dependency is determined to be unhealthy, just as electrical circuit breakers protect homes from burning down due to excessive use of power. Circuit breakersare implemented as state machines (Figure 3-5). When in their closed state, calls are simply passed through to the dependency.If any of these calls fails, the failure is counted. When the failure count reaches a specified threshold within a specified time period, the circuit trips into the open state. In the open state,calls always fail immediately. After a predetermined period of time, the circuit transitions into a “half-open” state. In this state, calls are again attempted to the remote dependency. Successful calls transition the circuit breaker back into the closed state, while failed calls return the circuit breaker to the open state.
+当服务的依赖被确定为不健康时，使用熔断器来阻绝该服务与其依赖的远程调用，就像电路熔断器可以防止电力使用过度，防止房子被烧毁一样。熔断器实现为状态机（图3-5）。当其处于关闭状态时，服务调用将直接传递给依赖关系。如果任何一个调用失败，则计入这次失败。当故障计数在指定时间内达到指定的阈值时，熔断器进入打开状态。在熔断器为打开状态时，所有调用都会失败。在预定时间段之后，线路转变为“半开”状态。在这种状态下，调用再次尝试远程依赖组件。成功的调用将熔断器转换回关闭状态，而失败的调用将熔断器返回到打开状态。
 
 ![Figure 3-5](../images/figure-3-5.jpg)
 
-**Bulkheads**
+**隔板**
 
-Bulkheads partition a service in order to com fine errors and pre‐vent the entire service from failing due to failure in one area.They are named for partitions that can be sealed to segment a ship into multiple watertight compartments. This can prevent damage (e.g., caused by a torpedo hit) from causing the entire ship to sink. Software systems can utilize bulkheads in manyways. Simply partitioning into microservices is our first line ofdefense. The partitioning of application processes into Linux containers (“Containerization” on page 26) so that one process cannot takeover an entire machine is another. Yet another example is the division of parallelized work into different thread pools.
+隔板将服务分区，以便限制错误影响的区域，并防止整个服务由于某个区域中的故障而失败。这些分区就像将船舶划分成多个水密舱室一样，使用隔板将不同的舱室分区。这可以防止当船只受损时造成整艘船沉没（例如，当被鱼雷击中时）。软件系统中可以用许多方式利用隔板。简单地将系统分为微服务是我们的第一道防线。将应用程序进程分区为Linux容器，以便使用单个进程无法接管整个计算机。另一个例子是将并行工作划分为不同的线程池。
 
-Netflix has produced a very powerful library for fault tolerance in Hystrix that employs these patterns and more. Hystrix allows code to be wrapped in HystrixCommand objects in order to wrap that code in a circuit breaker.
+Netflix 的 Hystrix 应用了这些和更多的模式，并提供了强大的容错功能。为了包含熔断器的代码，Hystrix 允许代码被包含到 HystrixCommand 对象中。
 
 ![Example 3-7](../images/example-3-7.jpg)
 
-1. The code in the run method is wrapped with a circuit breaker
+1. run方法中封装了熔断器
 
-Spring Cloud Netflix adds an @EnableCircuitBreaker annotation to enable the Hystrix runtime components in a Spring Boot application. It then leverages a set of contributed annotations to make programming with Spring and Hystrix as easy as the earlier integrations we’ve described (Example 3-8).
+Spring Cloud Netflix 通过在 Spring Boot 应用程序中添加 @EnableCircuitBreaker 注解来启用 Hystrix 运行时组件。然后通过另一组注解，使得基于 Spring 和 Hystrix 的编程与我们先前描述的集成一样简单（例3-8）。
 
 ![Example 3-8](../images/example-3-8.jpg)
 
-1. The method annotated with @HystrixCommand is wrapped witha circuit breaker.
-2. The method getProducerFallback is referenced within theannotation and provides a graceful fallback behavior while thecircuit is in the open or half-open state.
+1. 使用 @HystrixCommand 注解的方法封装了一个熔断器。
+2. 当线路处于打开或者半开状态时，注解中引用的 getProducerFallback 方法，提供了一个优雅的回调操作。
 
-Hystrix is unique from many other circuit breaker implementations in that it also employs bulkheads by operating each circuit breaker within its own thread pool. It also collects many useful metricsabout the circuit breaker’s state, including:
+Hystrix 相较于其他熔断器来说是独一无二的，因为它还通过在其自己的线程池中操作每个熔断器来提供隔板。它还收集了许多关于熔断器状态的有用指标，其中包括：
 
--   Traffic volume
+-   流量
 
--   Request rate
+-   请求率
 
--   Error percentage
+-   错误百分比
 
--   Hosts reporting
+-   主机报告
 
--   Latency percentiles
+-   延迟百分点
 
--   Successes, failures, and rejections
+-   成功、失败和拒绝
 
-These metrics are emitted as an event stream which can be aggregated by another Netflix OSS project called Turbine. Individual or aggregated metric streams can then be visualized using a powerful Hystrix Dashboard (Figure 3-6), providing excellent visibility into the overall health of the distributed system.
+这些 metric 会被发送到事件流中，然后被 Netflix OSS 项目中的另一个叫做 Turbine的组聚合。每个单独的和聚合后的 metric 流都可以在强大的 Hystrix Dashboard（图3-6）中以可视化的方式呈现，该页面提供了很好的分布式系统总体健康状态的可视化效果。
 
 ![Figure 3-6](../images/figure-3-6.jpg) 
 
-## API Gateways/Edge Services
+## API 网关/边缘服务
 
-In “Mobile Applications and Client Diversity” on page 6 we discussed the idea of server-side aggregation and transformation of an ecosystem of microservices. Why is this necessary?
+在“移动应用和客户端多样性”中我们探讨过服务器端聚合与微服务生态系统。为什么有这个必要？
 
-**Latency**
+**延迟**
 
-Mobile devices typically operate on lower speed networks than our in-home devices. The need to connect to tens (or hun‐dreds?) of microservices in order to satisfy the needs of a single application screen would reduce latency to unacceptable levels even on our in-home or business networks. The need for con‐current access to these services quickly becomes clear. It is less expensive and error-prone to capture and implement these con‐current patterns once on the server-side than it is to do the same on each device platform.
+移动设备通常运行在比我们家用设备更低速的网络上。即使是在家用或企业网络上， 为了满足单个应用屏幕的需求，需要连接数十(或者上百?)个微服务，这样的延迟也将变得不可接受。很明显，应用程序需要使用并发的方式来访问这些服务。在服务端一次性捕获和实行这些并发模式，会比在每一个设备平台上做相同的事情，来得更廉价、更不容易出错。
 
-A further source of latency is response size. Web service devel‐opment has trended toward the “return everything you mightpossibly need” approach in recent years, resulting in muchlarger response payloads than is necessary to satisfy the needs ofa single mobile device screen. Mobile device developers would prefer to reduce that latency by retrieving only the necessary information and ignoring the remainder.
+延迟的另一个来源是响应数据的大小。在Web服务开发领域，近年来一直趋向于“返回一切可能有用的数据”的做法，这将导致响应的返回数据越来愈大，远远超出了单一的移动设备屏幕的需求。 移动设备开发者更倾向于通过仅检索必要的信息而忽略其他不重要的信息，来减少等待时间。
 
-**Round trips**
+**往返通信**
 
-Even if network speed was not an issue, communicating with a large number of microservices would still cause problems for mobile developers. Network usage is one of the primary consumers of battery life on such devices. Mobile developers try toeconomize on network usage by making the fewest server-sidecalls possible to deliver the desired user experience.
+即使网速不成问题，与大量的微服务通信依然会给移动应用开发者造成困扰。移动设备的电池消耗主要是因为网络开销造成的。移动应用开发者尽可能通过最少的服务端调用来减少网络的开销，并提供预期的用户体验。
 
-**Device diversity**
+**设备多样性**
 
-The diversity within the mobile device ecosystem is enormous.Businesses must cope with a growing list of differences across their customer bases, including different:
+移动设备生态系统中设备多样性是十分巨大的。企业必须应对不断增长的客户群体差异，包括如下这些：
 
-- Manufacturers
-- Device types
-- Form factors
-- Device sizes
-- Programming languages
+- 制造商
+- 设备类型
+- 形式因素
+- 设备尺寸
+- 编程语言
 
+- 操作系统
+- 运行时环境
+- 并发模型
+- 支持的网络协议
 
-- Operating systems
+这种多样性甚至扩大到超出了移动设备生态系统，开发者目前可能还会关注家用消费电子设备不断增长的生态系统，包括智能电视和机顶盒。
 
-- Runtime environments
-
-- Concurrency models
-
-- Supported network protocols
-
-This diversity expands beyond even the mobile device ecosystem, as developers are now targeting a growing ecosystem of in-home consumer devices including smart televisions and set-topboxes.
-
-The API Gateway pattern (Figure 3-7) is targeted at shifting the bur‐den of these requirements from the device developer to the server-side. API gateways are simply a special class of microservices that meet the needs of a single client application (such as a specific iPhone app), and provide it with a single entry point to the backend.They access tens (or hundreds) of microservices concurrently with each request, aggregating the responses and transforming them to meet the client application’s needs. They also perform protocoltranslation (e.g., HTTP to AMQP) when necessary.
+API 网关模式（图 3-7）旨在将客户端的这些需求负担从设备开发者转移到服务器端。API 网关仅仅是一类特殊的满足单个客户端应用程序的微服务(如特定的 iPhone app)，并为其提供一个到后端的入口。每个请求同时访问数十（或数百）个微服务，汇总响应并转化，以满足客户应用的需求。在必要时，他们还进行协议转换（例如，HTTP 到 AMQP）。
 
 ![Figure 3-7](../images/figure-3-7.jpg)
 
-API gateways can be implemented using any language, runtime, orframework that well supports web programming, concurrency pat‐terns, and the protocols necesssary to communicate with the target microservices. Popular choices include Node.js (due to its reactive programming model) and the Go programming language (due to its simple concurrency model).
+API 网关可以使用任何支持 web 编程和并发模式的语言、运行时、框架，和能够目标微服务进行通信的协议来实现。热门的选择包括 Node.js （由于其反应式编程模型）和 GO 编程语言（由于其简单的并发模型）。
 
-In this discussion we’ll stick with Java and give an example fromRxJava, a JVM implementation of Reactive Extensions born at Netflix. Composing multiple work or data streams concurrently can be a challenge using only the primitives offered by the Java language, and RxJava is among a family of technologies (also including Reactor) targeted at relieving this complexity.
+在这次讨论中，我们将坚持使用 Java，并给出一个 RxJava 例子，一个 Netflix 开发的 Reactive Extensions 的 JVM 实现例子。如果仅使用 Java 语言所提供的原生方法来组成多个工作或数据流是一个很大的挑战，而 RxJava 是一种致力于缓解这种复杂性的技术（还包括 Reactor） 技术之一。
 
-In this example we’re building a Netflix-like site that presents users with a catalog of movies and the ability to create ratings and reviews for those movies. Further, when viewing a specific title, it provides recommendations to the viewer of movies they might like to watch if they like the title currently being viewed. In order to provide thesecapabilities, three microservices were developed:
+在这个例子中我们将创建一个类似 Netfilx 的网站，它可以在页面上展现一个电影目录，用户可以为这些电影创建评分并进行评论。而且，当用户在浏览某一个标题的页面时，页面上会给予用户相关推荐。为了提供这些能力，需要开发3个微服务：
 
-- A catalog service
+- 目录服务
+- 查看服务
+- 推荐服务
 
-- A reviews service
-
-- A recommendations service
-
-The mobile application for this service expects a response like that found in Example 3-9.
+我们期望的该移动应用的服务的响应如例3-9所示：
 
 ![Example 3-9](../images/example-3-9.jpg)
 
-This example barely scratches the surface of the available functionality in RxJava, and the reader is invited to explore the library furtherat RxJava’s wiki.
+例3-10中的代码利用了 RxJava 的 Observable.zip 方法来并发访问每个服务。在接到三个响应后，代码将它们传递给 Java 8 的 Lambada 表达式处理并生成一个 MovieDetails 实例。 该实例可以被序列化并产生入例3-9中的响应。
+
+![figure 3-10](../images/example-3-10.jpg)
+
+这个例子仅涉及了RxJava所有可用功能的一些皮毛，读者可以在 RxJava的wiki上查看进一步信息。
