@@ -4,7 +4,7 @@
 
 本书GitHub托管地址：[https://github.com/rootsongjc/migrating-to-cloud-native-application-architectures](https://github.com/rootsongjc/migrating-to-cloud-native-application-architectures)
 
-Gitbook 阅读地址：https://rootsongjc.gitbooks.io/moving-to-cloud-native-archtecture
+Gitbook 阅读地址：http://jimmysong.io/migrating-to-cloud-native-application-architectures
 
 [文章目录](SUMMARY.md)
 
