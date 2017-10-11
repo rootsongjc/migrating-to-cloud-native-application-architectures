@@ -18,7 +18,7 @@
         "back-to-top-button",
         "-lunr", "-search", "search-plus",
         "github-buttons@2.1.0",
-        "favicon@^0.0.2",
+        "favicon",
         "tbfed-pagefooter@^0.0.1"
     ],
     "pluginsConfig": {
@@ -43,8 +43,8 @@
             "modify_format": "YYYY-MM-DD HH:mm:ss"
         },
         "favicon": {
-            "shortcut": "favicon.ico",
-            "bookmark": "favicon.ico"
+            "shortcut": "images/favicon.ico",
+            "bookmark": "images/favicon.ico"
         }
     }
 }
