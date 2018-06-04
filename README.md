@@ -18,7 +18,7 @@ Gitbook 阅读地址：http://jimmysong.io/migrating-to-cloud-native-application
 
 原书作于2015年，其中的示例主要针对 Java 应用，实际上也适用于任何应用类型，云原生应用架构适用于异构语言的程序开发，不仅仅是针对 Java 语言的程序开发。截止到本人翻译本书时，云原生应用生态系统已经初具规模，[CNCF](https://cncf.io) 成员不断发展壮大，基于 Cloud Native 的创业公司不断涌现，[kubernetes](https://kubernetes.io) 引领容器编排潮流，和 Service Mesh 技术（如 [Linkerd](https://linkerd.io) 和 [Istio](https://istio.io)） 的出现，Go 语言的兴起（参考另一本书 [Cloud Native Go](http://rootsongjc.github.io/cloud-native-go)）等为我们将应用迁移到云原生架构的提供了更多的方案选择。
 
-[Jimmy Song](https:/github.com/rootsongjc)
+[Jimmy Song](https://github.com/rootsongjc)
 
 ## 简介
 
