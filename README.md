@@ -43,3 +43,28 @@ Matt Stine，Pivotal的技术产品经理，拥有15年企业IT和众多业务�
 by Matt Stine
 
 Copyright © 2015 O’Reilly Media. All rights reserved.
+
+## 社区&读者交流
+
+- **微信群**：K8S&Cloud Native实战，扫描我的微信二维码，[Jimmy Song](http://jimmysong.io/about)，或直接搜索微信号*jimmysong*后拉您入群，请增加备注（姓名-公司/学校/博客/社区/研究所/机构等）。
+- **知乎专栏**：[云原生应用架构](https://zhuanlan.zhihu.com/cloud-native)
+- **微信公众号**：扫描下面的二维码关注微信公众号CloudNativeGo（云原生应用架构）
+
+<p align="center">
+  <img src="https://github.com/rootsongjc/kubernetes-handbook/blob/master/images/cloud-native-go-wechat-qr-code.jpg?raw=true" alt="云原生应用架构微信公众号二维码"/>
+</p>
+
+- **ServiceMesher**：CloudNativeGo的姊妹公众号，旨在加强行业内部交流，促进开源文化构建，推动Service Mesh在企业落地，发布Service Mesh资讯。[加入组织](http://www.servicemesher.com/contact/)。
+
+<p align="center">
+  <img src="https://ws1.sinaimg.cn/large/00704eQkgy1fshv989hhqj309k09k0t6.jpg" alt="ServiceMesher微信公众号二维码"/>
+</p>
+
+## 云原生出版物
+
+以下为本人参与出版的图书。
+
+- [Cloud Native Go](https://jimmysong.io/posts/cloud-native-go/) - 基于Go和React的web云原生应用构建指南（Kevin Hoffman & Dan Nemeth著 宋净超 吴迎松 徐蓓 马超 译），电子工业出版社，2017年6月出版
+- [Python云原生](https://jimmysong.io/posts/cloud-native-python/) - 使用Python和React构建云原生应用（Manish Sethi著，宋净超译），电子工业出版社，2018年6月出版
+- [云原生Java](https://jimmysong.io/posts/cloud-native-java/) - Spring Boot、Spring Cloud与Cloud Foundry弹性系统设计（Josh Long & Kenny Bastani著，张若飞 宋净超译 ），电子工业出版社，2018年7月出版
+- [未来架构——从服务化到云原生](https://jimmysong.io/posts/future-architecture-from-soa-to-cloud-native/) - 张亮 吴晟 敖小剑 宋净超 著，电子工业出版社，2019年2月出版
