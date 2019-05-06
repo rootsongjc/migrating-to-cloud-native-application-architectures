@@ -8,7 +8,7 @@
             "Jimmy Song": "https://jimmysong.io",
             "Awesome Cloud Native": "https://jimmysong.io/awesome-cloud-native",
             "ServiceMesher社区": "http://www.servicemesher.com",
-            "Istio Handbook - Istio 中文指南/服务网格实践手册": "https://jimmysong.io/istio-handbook",
+            "Istio Handbook - Istio服务网格进阶实战": "https://jimmysong.io/istio-handbook",
             "Awesome Service Mesh": "http://www.servicemesher.com/awesome-servicemesh",
             "Cloud Native Go - 基于Go和React的web云原生应用构建指南": "https://jimmysong.io/posts/cloud-native-go",
             "Cloud Native Python（Python云原生） - 使用Python和React构建云原生应用": "https://jimmysong.io/posts/cloud-native-python",
@@ -30,7 +30,8 @@
         "favicon",
         "tbfed-pagefooter@^0.0.1",
         "3-ba",
-        "ga"
+        "ga",
+        "lightbox"
     ],
     "pluginsConfig": {
         "github": {
@@ -49,8 +50,8 @@
             "size": "small"
         },
         "tbfed-pagefooter": {
-            "copyright": "Copyright © <a href=https://jimmysong.io>jimmysong.io</a> 2017-2019",
-            "modify_label": "Updated:",
+            "copyright": "<p><a href=https://jimmysong.io/about>私信我获取KubeCon China 2019门票折扣码和报名SOFAStack Cloud Native Workshop</a></p><p><a href=https://gw.alipayobjects.com/mdn/site_comm/afts/img/A*HA0uRIfs6UIAAAAAAAAAAABjARQnAQ data-lightbox=2fd927ee-fa64-4eca-8ed5-6bd72b573a3c>点击关注【云原生应用架构】公众号回复【加群】加入学习群</a> | <a href=https://jimmysong.io/jobs/>加入蚂蚁金服金融科技，构建金融级云原生基础设施</a></p>Copyright © <a href=https://jimmysong.io>jimmysong.io</a> 2017-2019",
+            "modify_label": " Updated at ",
             "modify_format": "YYYY-MM-DD HH:mm:ss"
         },
         "favicon": {

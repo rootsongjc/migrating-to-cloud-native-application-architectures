@@ -57,8 +57,9 @@ Copyright © 2015 O’Reilly Media. All rights reserved.
 - **ServiceMesher**：CloudNativeGo的姊妹公众号，旨在加强行业内部交流，促进开源文化构建，推动Service Mesh在企业落地，发布Service Mesh资讯。[加入组织](http://www.servicemesher.com/contact/)。
 
 <p align="center">
-  <img src="https://ws1.sinaimg.cn/large/00704eQkgy1fshv989hhqj309k09k0t6.jpg" alt="ServiceMesher微信公众号二维码"/>
+  <img src="https://gw.alipayobjects.com/mdn/site_comm/afts/img/A*nUnKQYGDlP8AAAAAAAAAAABjARQnAQ" alt="ServiceMesher微信公众号二维码"/>
 </p>
+
 
 ## 云原生出版物
 
