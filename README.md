@@ -4,9 +4,9 @@
 
 本书GitHub托管地址：[https://github.com/rootsongjc/migrating-to-cloud-native-application-architectures](https://github.com/rootsongjc/migrating-to-cloud-native-application-architectures)
 
-Gitbook 阅读地址：http://jimmysong.io/migrating-to-cloud-native-application-architectures
+Gitbook 阅读地址：https://jimmysong.io/migrating-to-cloud-native-application-architectures
 
-[文章目录](SUMMARY.md)
+注：本书英文版发布与 2015 年，该中文版由 [Jimmy Song](https://jimmysong.io) 翻译，发布于 2017 年。
 
 ## 译者序
 
@@ -17,8 +17,6 @@ Gitbook 阅读地址：http://jimmysong.io/migrating-to-cloud-native-application
 [Pivotal](https://pivotal.io) 是云原生应用的提出者，并推出了 [Pivotal Cloud Foundry](https://pivotal.io/platform) 云原生应用平台和 [Spring](https://spring.io/) 开源 Java 开发框架，成为云原生应用架构中先驱者和探路者。
 
 原书作于2015年，其中的示例主要针对 Java 应用，实际上也适用于任何应用类型，云原生应用架构适用于异构语言的程序开发，不仅仅是针对 Java 语言的程序开发。截止到本人翻译本书时，云原生应用生态系统已经初具规模，[CNCF](https://cncf.io) 成员不断发展壮大，基于 Cloud Native 的创业公司不断涌现，[kubernetes](https://kubernetes.io) 引领容器编排潮流，和 Service Mesh 技术（如 [Linkerd](https://linkerd.io) 和 [Istio](https://istio.io)） 的出现，Go 语言的兴起（参考另一本书 [Cloud Native Go](http://rootsongjc.github.io/cloud-native-go)）等为我们将应用迁移到云原生架构的提供了更多的方案选择。
-
-[Jimmy Song](https://github.com/rootsongjc)
 
 ## 简介
 
