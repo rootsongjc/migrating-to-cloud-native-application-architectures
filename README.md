@@ -2,11 +2,11 @@
 
 本书是 [Migrating to Cloud Native Application Architectures](https://content.pivotal.io/ebooks/migrating-to-cloud-native-application-architectures) 的中文版。
 
-本书GitHub托管地址：[https://github.com/rootsongjc/migrating-to-cloud-native-application-architectures](https://github.com/rootsongjc/migrating-to-cloud-native-application-architectures)
+- 本书GitHub托管地址：[https://github.com/rootsongjc/migrating-to-cloud-native-application-architectures](https://github.com/rootsongjc/migrating-to-cloud-native-application-architectures)
 
-Gitbook 阅读地址：https://jimmysong.io/migrating-to-cloud-native-application-architectures
+- Gitbook 阅读地址：https://jimmysong.io/migrating-to-cloud-native-application-architectures
 
-注：本书英文版发布与 2015 年，该中文版由 [Jimmy Song](https://jimmysong.io) 翻译，发布于 2017 年。
+注：本书英文版发布于 2015 年，中文版由 [Jimmy Song](https://jimmysong.io) 翻译，发布于 2017 年。
 
 <p align="center">
   <a href="https://jimmysong.io/migrating-to-cloud-native-application-architectures/">
@@ -33,14 +33,14 @@ Gitbook 阅读地址：https://jimmysong.io/migrating-to-cloud-native-applicatio
 本书中讨论的应用程序架构包括：
 
 - 十二因素应用程序：云原生应用程序架构模式的集合
-- 微服务：独立部署的服务，只做一件事情
+- 微服务：独立部署的服务，每个服务只做一件事情
 - 自助服务的敏捷基础设施：快速，可重复和一致地提供应用环境和后台服务的平台
 - 基于API的协作：发布和版本化的API，允许在云原生应用程序架构中的服务之间进行交互
 - 抗压性：根据压力变强的系统
 
 **关于作者**
 
-Matt Stine，Pivotal的技术产品经理，拥有15年企业IT和众多业务领域的经验。 Matt 强调精益/敏捷方法、DevOps、架构模式和编程范例，他正在探究使用技术组合帮助企业IT部门能够像初创公司一样工作。
+Matt Stine，Pivotal的技术产品经理，拥有15年企业IT和众多业务领域的经验。Matt 强调精益/敏捷方法、DevOps、架构模式和编程范例，他正在探究使用技术组合帮助企业IT部门能够像初创公司一样工作。
 
 **Migrating to Cloud-Native Application Architectures**
 
@@ -57,9 +57,6 @@ Copyright © 2015 O’Reilly Media. All rights reserved.
 [署名-非商业性使用-相同方式共享 4.0 (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)
 
 ## 社区&读者交流
-
-- **微信群**：K8S&Cloud Native实战，扫描我的微信二维码，[Jimmy Song](http://jimmysong.io/about)，或直接搜索微信号*jimmysong*后拉您入群，请增加备注（姓名-公司/学校/博客/社区/研究所/机构等）。
-- **知乎专栏**：[云原生应用架构](https://zhuanlan.zhihu.com/cloud-native)
 
 - **[加入 ServiceMesher 社区](https://www.servicemesher.com/contact/)**：ServiceMesher 社区是由一群拥有相同价值观和理念的志愿者们共同发起，于 2018 年 4 月正式成立。社区关注领域有：容器、微服务、Service Mesh、Serverless，拥抱开源和云原生，致力于推动云原生在中国的蓬勃发展。
 - ServiceMesher 社区微信公众号
