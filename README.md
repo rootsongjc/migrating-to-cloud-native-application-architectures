@@ -6,7 +6,7 @@
 
 - Gitbook 阅读地址：https://jimmysong.io/migrating-to-cloud-native-application-architectures
 
-注：本书英文版发布于 2015 年，中文版由 [Jimmy Song](https://jimmysong.io) 翻译，发布于 2017 年。
+注：本书英文版发布于 2015 年 2 月，中文版由 [Jimmy Song](https://jimmysong.io) 翻译，发布于 2017 年 7 月。
 
 <p align="center">
   <a href="https://jimmysong.io/migrating-to-cloud-native-application-architectures/">
