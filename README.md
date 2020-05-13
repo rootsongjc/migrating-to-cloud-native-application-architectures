@@ -56,13 +56,7 @@ Copyright © 2015 O’Reilly Media. All rights reserved.
 
 ## 社区&读者交流
 
-- **[加入 ServiceMesher 社区](https://www.servicemesher.com/contact/)**：ServiceMesher 社区是由一群拥有相同价值观和理念的志愿者们共同发起，于 2018 年 4 月正式成立。社区关注领域有：容器、微服务、Service Mesh、Serverless，拥抱开源和云原生，致力于推动云原生在中国的蓬勃发展。
-- ServiceMesher 社区微信公众号
-
-<p align="center">
-  <img src="https://gw.alipayobjects.com/mdn/site_comm/afts/img/A*nUnKQYGDlP8AAAAAAAAAAABjARQnAQ" alt="ServiceMesher微信公众号二维码"/>
-</p>
-
+[加入云原生社区](https://cloudnative.to/contact/)。
 
 ## 云原生出版物
 

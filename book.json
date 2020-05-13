@@ -7,13 +7,13 @@
         "sidebar": {
             "Jimmy Song": "https://jimmysong.io",
             "Awesome Cloud Native": "https://jimmysong.io/awesome-cloud-native",
-            "ServiceMesher社区": "https://www.servicemesher.com",
+            "云原生社区": "https://cloudnative.to",
             "Istio Handbook - Istio服务网格进阶实战": "https://www.servicemesher.com/istio-handbook",
             "Serverless Handbook - 无服务器架构实践手册": "https://jimmysong.io/serverless-handbook",
-            "Cloud Native Go - 基于Go和React的web云原生应用构建指南": "https://jimmysong.io/posts/cloud-native-go",
-            "Cloud Native Python（Python云原生） - 使用Python和React构建云原生应用": "https://jimmysong.io/posts/cloud-native-python",
-            "Cloud Native Java（云原生Java）- Spring Boot、Spring Cloud与CloudFoundry弹性系统设计": "https://jimmysong.io/posts/cloud-native-java",
-            "未来架构——从服务化到云原生": "https://jimmysong.io/posts/future-architecture-from-soa-to-cloud-native/"
+            "Cloud Native Go - 基于Go和React的web云原生应用构建指南": "https://jimmysong.io/book/cloud-native-go",
+            "Cloud Native Python（Python云原生） - 使用Python和React构建云原生应用": "https://jimmysong.io/book/cloud-native-python",
+            "Cloud Native Java（云原生Java）- Spring Boot、Spring Cloud与CloudFoundry弹性系统设计": "https://jimmysong.io/book/cloud-native-java",
+            "未来架构——从服务化到云原生": "https://jimmysong.io/book/future-architecture-from-soa-to-cloud-native/"
         }
     },
     "plugins": [
@@ -49,7 +49,7 @@
             "size": "small"
         },
         "tbfed-pagefooter": {
-            "copyright": "Copyright © 2017-2019 | Distributed under <a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh>CC BY 4.0</a> | <a href=https://jimmysong.io>jimmysong.io</a>",
+            "copyright": "Copyright © 2017-2020 | Distributed under <a href=https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh>CC BY 4.0</a> | <a href=https://jimmysong.io>jimmysong.io</a>",
             "modify_label": " Updated at ",
             "modify_format": "YYYY-MM-DD HH:mm:ss"
         },  
