@@ -5,15 +5,8 @@
     "author": "Jimmy Song",
     "links": {
         "sidebar": {
-            "Jimmy Song": "https://jimmysong.io",
-            "Awesome Cloud Native": "https://jimmysong.io/awesome-cloud-native",
-            "云原生社区": "https://cloudnative.to",
-            "Istio Handbook - Istio服务网格进阶实战": "https://www.servicemesher.com/istio-handbook",
-            "Serverless Handbook - 无服务器架构实践手册": "https://jimmysong.io/serverless-handbook",
-            "Cloud Native Go - 基于Go和React的web云原生应用构建指南": "https://jimmysong.io/book/cloud-native-go",
-            "Cloud Native Python（Python云原生） - 使用Python和React构建云原生应用": "https://jimmysong.io/book/cloud-native-python",
-            "Cloud Native Java（云原生Java）- Spring Boot、Spring Cloud与CloudFoundry弹性系统设计": "https://jimmysong.io/book/cloud-native-java",
-            "未来架构——从服务化到云原生": "https://jimmysong.io/book/future-architecture-from-soa-to-cloud-native/"
+            "回到首页": "https://jimmysong.io",
+            "云原生社区": "https://cloudnative.to"
         }
     },
     "plugins": [
@@ -21,7 +14,6 @@
         "codesnippet",
         "splitter",
         "page-toc-button",
-        "image-captions",
         "editlink",
         "back-to-top-button",
         "-lunr", "-search", "search-plus",
@@ -39,9 +31,6 @@
         "editlink": {
             "base": "https://github.com/rootsongjc/migrating-to-cloud-native-application-architectures/tree/master/",
             "label": "编辑本页"
-        },
-        "image-captions": {
-            "caption": "图片 - _CAPTION_"
         },
         "github-buttons": {
             "repo": "rootsongjc/migrating-to-cloud-native-application-architectures",
