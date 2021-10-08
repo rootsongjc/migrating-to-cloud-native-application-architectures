@@ -15,6 +15,6 @@
 - 以移动为核心的用户体验
 
 
-将软件迁移到云上是一种自演化，使用了云原生应用架构是这些公司能够如此具有破坏性的核心原因。通过云，任何能够按需、自助弹性提供和释放计算、网络和存储资源的计算环境。云的定义包括公有云（例如 Amazon Web Services、Google Cloud和Microsoft Azure）和私有云（例如 VMware vSphere和 OpenStack）。
+将软件迁移到云上是一种自演化，使用了云原生应用架构是这些公司能够如此具有破坏性的核心原因。对于云，我们指的是一个任何能够按需、自助弹性提供和释放计算、网络和存储资源的计算环境。云的定义包括公有云（例如 Amazon Web Services、Google Cloud和Microsoft Azure）和私有云（例如 VMware vSphere和 OpenStack）。
 
 本章中我们将探讨云原生应用架构的创新性，然后验证云原生应用架构的主要特性。
