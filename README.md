@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://jimmysong.io/migrating-to-cloud-native-application-architectures/">
-    <img src="images/cover-thumbnail.jpg" alt="迁移到云原生应用架构 by Jimmy Song(宋净超）">
+    <img src="cover-thumbnail.jpg" alt="迁移到云原生应用架构 by Jimmy Song(宋净超）">
   </a>
 </p>
 
