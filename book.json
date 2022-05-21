@@ -6,7 +6,8 @@
     "links": {
         "sidebar": {
             "回到首页": "https://jimmysong.io",
-            "云原生社区": "https://cloudnative.to"
+            "云原生社区": "https://cloudnative.to",
+            "云原生资料库": "https://jimmysong.io/docs/"
         }
     },
     "plugins": [
@@ -14,7 +15,6 @@
         "codesnippet",
         "splitter",
         "page-toc-button",
-        "editlink",
         "back-to-top-button",
         "-lunr", "-search", "search-plus",
         "github-buttons@2.1.0",

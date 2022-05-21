@@ -1,16 +1,9 @@
+**本仓库已停止维护，内容迁移至[云原生资料库](https://github.com/rootsongjc/docs)，请转至[新页面](https://jimmysong.io/docs/migrating-to-cloud-native-application-architectures/)浏览**。
+
 # 迁移到云原生应用架构
 
 本书是 [Migrating to Cloud Native Application Architectures](https://content.pivotal.io/ebooks/migrating-to-cloud-native-application-architectures) 的中文版，本书英文版发布于 2015 年 2 月，中文版由 [Jimmy Song](https://jimmysong.io) 翻译，发布于 2017 年 7 月。
 
-- 本书GitHub托管地址：[https://github.com/rootsongjc/migrating-to-cloud-native-application-architectures](https://github.com/rootsongjc/migrating-to-cloud-native-application-architectures)
-
-- Gitbook 阅读地址：https://jimmysong.io/migrating-to-cloud-native-application-architectures
-
-<p align="center">
-  <a href="https://jimmysong.io/migrating-to-cloud-native-application-architectures/">
-    <img src="cover-thumbnail.jpg" alt="迁移到云原生应用架构 by Jimmy Song(宋净超）">
-  </a>
-</p>
 
 ## 译者序
 
@@ -18,9 +11,7 @@
 
 俗话说“意识决定行动”，在迁移到云原生应用之前，我们大家需要先对 Cloud Native（云原生）的概念、组织形式并对实现它的技术有一个大概的了解，这样才能指导我们的云原生架构实践。
 
-[Pivotal](https://pivotal.io) 是云原生应用的提出者，并推出了 [Pivotal Cloud Foundry](https://pivotal.io/platform) 云原生应用平台和 [Spring](https://spring.io/) 开源 Java 开发框架，成为云原生应用架构中先驱者和探路者。
-
-原书作于2015年，其中的示例主要针对 Java 应用，实际上也适用于任何应用类型，云原生应用架构适用于异构语言的程序开发，不仅仅是针对 Java 语言的程序开发。截止到本人翻译本书时，云原生应用生态系统已经初具规模，[CNCF](https://cncf.io) 成员不断发展壮大，基于 Cloud Native 的创业公司不断涌现，[Kubernetes](https://kubernetes.io) 引领容器编排潮流，和 Service Mesh 技术（如 [Linkerd](https://linkerd.io) 和 [Istio](https://istio.io)） 的出现，Go 语言的兴起（参考另一本书 [Cloud Native Go](https://jimmysong.io/book/cloud-native-go)）等为我们将应用迁移到云原生架构的提供了更多的方案选择。
+原书作于2015年，其中的示例主要针对 Java 应用，实际上也适用于任何应用类型，云原生应用架构适用于异构语言的程序开发，不仅仅是针对 Java 语言的程序开发。截止到本人翻译本书时，云原生应用生态系统已经初具规模，[CNCF](https://cncf.io) 成员不断发展壮大，基于 Cloud Native 的创业公司不断涌现，[Kubernetes](https://kubernetes.io) 引领容器编排潮流，和 Service Mesh 技术（如 [Linkerd](https://linkerd.io) 和 [Istio](https://istio.io)） 的出现，Go 语言的兴起等为我们将应用迁移到云原生架构的提供了更多的方案选择。
 
 ## 简介
 
@@ -45,24 +36,3 @@ Matt Stine，Pivotal的技术产品经理，拥有15年企业IT和众多业务�
 by Matt Stine
 
 Copyright © 2015 O’Reilly Media. All rights reserved.
-
-## License
-
-<p align="left">
-  <img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g7m9ofbzirj302g00vq2p.jpg" alt="CC4 License"/>
-</p>
-
-[署名-非商业性使用-相同方式共享 4.0 (CC BY-NC-SA 4.0)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)
-
-## 社区&读者交流
-
-[加入云原生社区](https://cloudnative.to/contact/)。
-
-## 云原生出版物
-
-以下为本人参与出版的图书。
-
-- [Cloud Native Go](https://jimmysong.io/posts/cloud-native-go/) - 基于Go和React的web云原生应用构建指南（Kevin Hoffman & Dan Nemeth著 宋净超 吴迎松 徐蓓 马超 译），电子工业出版社，2017年6月出版
-- [Python云原生](https://jimmysong.io/posts/cloud-native-python/) - 使用Python和React构建云原生应用（Manish Sethi著，宋净超译），电子工业出版社，2018年6月出版
-- [云原生Java](https://jimmysong.io/posts/cloud-native-java/) - Spring Boot、Spring Cloud与Cloud Foundry弹性系统设计（Josh Long & Kenny Bastani著，张若飞 宋净超译 ），电子工业出版社，2018年7月出版
-- [未来架构——从服务化到云原生](https://jimmysong.io/posts/future-architecture-from-soa-to-cloud-native/) - 张亮 吴晟 敖小剑 宋净超 著，电子工业出版社，2019年2月出版
